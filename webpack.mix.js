@@ -1,4 +1,4 @@
-const mix = require('laravel-mix');
+const mix = require("laravel-mix");
 
 /*
  |--------------------------------------------------------------------------
@@ -11,5 +11,42 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.react('resources/js/app.js', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css');
+mix.react("resources/ts/index.tsx", "public/js").webpackConfig({
+    module: {
+        rules: [
+            {
+                test: /\.tsx?$/,
+                include: /resources\/ts/,
+                loader: "ts-loader"
+            }
+        ]
+    },
+    resolve: {
+        extensions: ["*", ".js", ".jsx", ".vue", ".ts", ".tsx"]
+    },
+    output: {
+        publicPath: process.env.MIX_PUBLIC_PATH || "/",
+        chunkFilename: "js/out/[name]-" + new Date().getTime() + ".js"
+    },
+    devServer: {
+        hot: true, // this enables hot reload
+        inline: true, // use inline method for hmr
+        port: '8060',
+        headers: { "Access-Control-Allow-Origin": "*" },
+        watchOptions: {
+            exclude: [/bower_components/, /node_modules/]
+        }
+    },
+    node: {
+        fs: "empty",
+        module: "empty"
+    }
+});
+
+
+mix.options({
+   hmrOptions: {
+       host: "127.0.0.1",
+       port: '8060'
+   }
+});

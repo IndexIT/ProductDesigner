@@ -11,6 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+// Put all routes above this route
+Route::view('/{path?}', 'react')
+     ->where('path', '.*')
+     ->name('react');
