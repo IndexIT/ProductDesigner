@@ -6,6 +6,13 @@
         "tslint-config-prettier"
     ],
     "jsRules": {},
-    "rules": {},
+    "rules": {
+        "ordered-imports":true,
+        "quotemark":[true,"double"],
+        "no-unused-variable":true,
+        "semicolon":[true,"always"],
+        "no-submodule-imports":false,
+        "no-implicit-dependencies": false
+    },
     "rulesDirectory": []
 }

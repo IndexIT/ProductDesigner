@@ -1,22 +1,25 @@
-import {hot} from 'react-hot-loader'
+import { MuiThemeProvider } from "@material-ui/core/styles";
 import * as React from "react";
+import { hot } from "react-hot-loader";
+import { Provider } from "react-redux";
+import store from "../store";
+import theme from "../theme";
+import Router from "./Router";
 
 class App extends React.Component {
-    public render (){
+    public render() {
         return (
-            <div>
-                jnjbhjbhjbjhbhj
-            </div>
-        )
+            <MuiThemeProvider theme={theme}>
+                <Provider store={store}>
+                    <Router />
+                </Provider>
+            </MuiThemeProvider>
+        );
     }
 }
 
 let Component: React.ComponentType;
 
-if(process.env.MIX_APP_DEBUG==='true'){
-    Component =  hot(module)(App)
-} else {
-    Component = App;
-}
+Component = process.env.MIX_APP_DEBUG === "true" ? hot(module)(App) : App;
 
 export default Component;
