@@ -39,6 +39,8 @@ class AuthController extends Controller
         'password' => 'required|min:6',
       ]);
 
+      $token = null;
+
       if($validator->errors){
         return response()->json(['token' => $token, 'success' => true, ], 200);
       }
