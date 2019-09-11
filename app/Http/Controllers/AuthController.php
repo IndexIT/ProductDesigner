@@ -10,14 +10,14 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
-      $validator = Validator::make($request, [
+      $validator = Validator::make($request->all(), [
         'name' => 'required',
-        'email' => 'required|email|confirmed|unique:users',
-        'password' => 'required|min:6',
-        'g-recapture-response' => 'recaptcha'
+        'email' => 'required|email|unique:users',
+        'password' => 'required|confirmed|min:6',
+        // 'g-recapture-response' => 'recaptcha'
       ]);
 
-      if($validator->errors){
+      if($validator->fails()){
         return response()->json(['errors' => $validator->errors()->all()]);
       }
 
@@ -34,13 +34,13 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-      $validator = Validator::make($request, [
-        'email' => 'required|email|confirmed|unique:users',
+      $validator = Validator::make($request->all(), [
+        'email' => 'required|email',
         'password' => 'required|min:6',
       ]);
 
-      if($validator->errors){
-        return response()->json(['token' => $token, 'success' => true, ], 200);
+      if($validator->fails()){
+        return response()->json(['errors' => $validator->errors()->all()]);
       }
 
       $credentials = [

@@ -17,4 +17,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('web/user/login', 'AuthController@login');
+Route::post('login', 'AuthController@login');
+Route::post('register', 'AuthController@register');
