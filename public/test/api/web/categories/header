@@ -1,0 +1,19 @@
+{
+    "success":true,
+    "categories":[
+        {
+            "id":1,
+            "title":"Shorts",
+            "subCategories":[
+
+            ]
+        },
+        {
+            "id":2,
+            "title":"Denim",
+            "subCategories":[
+                
+            ]
+        }
+    ]
+}

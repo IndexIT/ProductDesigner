@@ -1,10 +1,12 @@
+import { createBrowserHistory } from "history";
 import * as React from "react";
 import { connect } from "react-redux";
+import {Route,Router as ReactRouter} from "react-router-dom";
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../rootReducer";
 import { fetchUser } from "../store/AuthController/actions";
 import { IAuthControllerState } from "../store/AuthController/types";
-import Layout from "./Layout/Layout";
+import HomePage from "./HomePage/HomePage";
 
 const mapStateToProps = (state: AppState) => ({
     ...state.authController
@@ -17,6 +19,8 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
 interface IProps extends IAuthControllerState {
     onFetchLoggedUser: () => void;
 }
+
+const history = createBrowserHistory();
 
 class Router extends React.Component<IProps> {
     constructor(props: IProps) {
@@ -33,9 +37,9 @@ class Router extends React.Component<IProps> {
         }
 
         return (
-            <Layout>
-                <div>kmkmk</div>
-            </Layout>
+            <ReactRouter history={history} >
+                <Route path="/" exact={true} component={HomePage}  /> 
+            </ReactRouter>
         );
     }
 }

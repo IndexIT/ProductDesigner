@@ -9,6 +9,7 @@ export interface IUser {
     name: string;
     avatar: string | number;
     email: string;
+    type: string;
 }
 
 export interface IAuthControllerState {

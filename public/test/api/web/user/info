@@ -1,0 +1,10 @@
+{
+    "success":true,
+    "user":{
+        "id":2,
+        "name":"Dom Nicholas",
+        "avatar": "323233234",
+        "email":"domnic@gmail.com",
+        "type":"buyer"
+    }
+}
