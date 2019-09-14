@@ -61909,6 +61909,9 @@ const Toolbar_1 = __importDefault(__webpack_require__(/*! @material-ui/core/Tool
 const Typography_1 = __importDefault(__webpack_require__(/*! @material-ui/core/Typography */ "./node_modules/@material-ui/core/esm/Typography/index.js"));
 const withStyles_1 = __importDefault(__webpack_require__(/*! @material-ui/styles/withStyles */ "./node_modules/@material-ui/styles/esm/withStyles/index.js"));
 const React = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+const helper_1 = __webpack_require__(/*! ../../helper */ "./resources/ts/helper.ts");
+const actions_1 = __webpack_require__(/*! ../../store/LoginForm/actions */ "./resources/ts/store/LoginForm/actions.ts");
 const styler = withStyles_1.default((theme) => ({
     centerAlign: {
         textAlign: "center"
@@ -61920,12 +61923,26 @@ const styler = withStyles_1.default((theme) => ({
         marginTop: theme.spacing(2)
     }
 }));
+exports.mapStateToProps = (state) => ({
+    ...state.loginForm
+});
+exports.mapDispatchToProps = (dispatch) => ({
+    onChangeEmail: (email) => dispatch(actions_1.changeEmail(email)),
+    onChangePassword: (password) => dispatch(actions_1.changePassword(password))
+});
 class LoginForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleChangeEmail = this.handleChangeEmail.bind(this);
+        this.handleChangePassword = this.handleChangePassword.bind(this);
+    }
     render() {
-        const { classes } = this.props;
+        const { classes, email, password } = this.props;
+        const emailError = helper_1.validate(email, "required", "email");
+        const passwordError = helper_1.validate(password, "required", "password", "min:6");
         return (React.createElement("form", null,
-            React.createElement(TextField_1.default, { className: classes.input, margin: "dense", label: "Email", fullWidth: true }),
-            React.createElement(TextField_1.default, { className: classes.input, margin: "dense", label: "Password", type: "password", fullWidth: true }),
+            React.createElement(TextField_1.default, { className: classes.input, margin: "dense", label: "Email", fullWidth: true, value: email, onChange: this.handleChangeEmail, error: !!emailError, helperText: emailError }),
+            React.createElement(TextField_1.default, { className: classes.input, margin: "dense", label: "Password", type: "password", fullWidth: true, value: password, onChange: this.handleChangePassword, error: !!passwordError, helperText: passwordError }),
             React.createElement(Toolbar_1.default, null,
                 React.createElement("div", { className: classes.grow }),
                 React.createElement(Button_1.default, { color: "secondary", variant: "outlined" }, "Login")),
@@ -61935,8 +61952,16 @@ class LoginForm extends React.Component {
                 React.createElement("div", null,
                     React.createElement(Button_1.default, { size: "small", variant: "outlined" }, "Browse")))));
     }
+    handleChangePassword(e) {
+        const { onChangeEmail } = this.props;
+        onChangeEmail(e.target.value);
+    }
+    handleChangeEmail(e) {
+        const { onChangePassword } = this.props;
+        onChangePassword(e.target.value);
+    }
 }
-exports.default = styler(LoginForm);
+exports.default = react_redux_1.connect(exports.mapStateToProps, exports.mapDispatchToProps)(styler(LoginForm));
 
 
 /***/ }),
@@ -62088,6 +62113,8 @@ const TextField_1 = __importDefault(__webpack_require__(/*! @material-ui/core/Te
 const Toolbar_1 = __importDefault(__webpack_require__(/*! @material-ui/core/Toolbar */ "./node_modules/@material-ui/core/esm/Toolbar/index.js"));
 const withStyles_1 = __importDefault(__webpack_require__(/*! @material-ui/styles/withStyles */ "./node_modules/@material-ui/styles/esm/withStyles/index.js"));
 const React = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+const actions_1 = __webpack_require__(/*! ../../store/RegisterForm/actions */ "./resources/ts/store/RegisterForm/actions.ts");
 const styler = withStyles_1.default((theme) => ({
     grow: {
         flexGrow: 1
@@ -62096,19 +62123,42 @@ const styler = withStyles_1.default((theme) => ({
         marginTop: theme.spacing(2)
     }
 }));
+exports.mapStateToProps = (state) => ({
+    ...state.registerForm
+});
+exports.mapDispatchToProps = (dispatch) => ({
+    onChangeEmail: (email) => dispatch(actions_1.changeEmail(email)),
+    onChangePassword: (password) => dispatch(actions_1.changePassword(password)),
+    onChangePasswordConfirmation: (passwordConfirmation) => dispatch(actions_1.changePasswordConfirmation(passwordConfirmation))
+});
 class RegisterForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleChangeEmail = this.handleChangeEmail.bind(this);
+        this.handleChangePassword = this.handleChangePassword.bind(this);
+        this.handleChangePasswordConfirmation = this.handleChangePasswordConfirmation.bind(this);
+    }
     render() {
-        const { classes } = this.props;
+        const { classes, email, password, passwordConfirmation } = this.props;
         return (React.createElement("form", null,
-            React.createElement(TextField_1.default, { className: classes.input, margin: "dense", label: "Name", fullWidth: true }),
-            React.createElement(TextField_1.default, { className: classes.input, margin: "dense", label: "Email", fullWidth: true }),
-            React.createElement(TextField_1.default, { className: classes.input, margin: "dense", label: "Password", type: "password", fullWidth: true }),
+            React.createElement(TextField_1.default, { className: classes.input, margin: "dense", label: "Email", fullWidth: true, value: email, onChange: this.handleChangeEmail }),
+            React.createElement(TextField_1.default, { className: classes.input, margin: "dense", label: "Password", type: "password", fullWidth: true, value: password, onChange: this.handleChangePassword }),
+            React.createElement(TextField_1.default, { className: classes.input, margin: "dense", label: "Confirm Your Password", type: "password", fullWidth: true, value: passwordConfirmation, onChange: this.handleChangePasswordConfirmation }),
             React.createElement(Toolbar_1.default, null,
                 React.createElement("div", { className: classes.grow }),
                 React.createElement(Button_1.default, { color: "secondary", variant: "outlined" }, "Register"))));
     }
+    handleChangeEmail(e) {
+        this.props.onChangeEmail(e.target.value);
+    }
+    handleChangePassword(e) {
+        this.props.onChangePassword(e.target.value);
+    }
+    handleChangePasswordConfirmation(e) {
+        this.props.onChangePasswordConfirmation(e.target.value);
+    }
 }
-exports.default = styler(RegisterForm);
+exports.default = react_redux_1.connect(exports.mapStateToProps, exports.mapDispatchToProps)(styler(RegisterForm));
 
 
 /***/ }),
@@ -62282,6 +62332,16 @@ exports.avatar = (size, name) => {
 exports.nameToURL = (name) => {
     return name.replace(/([^A-Z0-9a-z])/g, "_").toLowerCase();
 };
+/**
+ * Validating a user input
+ * @param value user input value
+ * @param rules comma separated rules to validate input. "required","email","min:xxx","max:xxx"
+ */
+exports.validate = (value, ...rules) => {
+    if (rules.includes("required") && (value.trim() === "" || !value)) {
+        return "This field is required";
+    }
+};
 
 
 /***/ }),
@@ -62339,10 +62399,14 @@ const redux_1 = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.
 const reducers_1 = __importDefault(__webpack_require__(/*! ./store/AuthController/reducers */ "./resources/ts/store/AuthController/reducers.ts"));
 const reducers_2 = __importDefault(__webpack_require__(/*! ./store/HomePage/reducers */ "./resources/ts/store/HomePage/reducers.ts"));
 const reducers_3 = __importDefault(__webpack_require__(/*! ./store/Layout/reducers */ "./resources/ts/store/Layout/reducers.ts"));
+const reducers_4 = __importDefault(__webpack_require__(/*! ./store/LoginForm/reducers */ "./resources/ts/store/LoginForm/reducers.ts"));
+const reducers_5 = __importDefault(__webpack_require__(/*! ./store/RegisterForm/reducers */ "./resources/ts/store/RegisterForm/reducers.ts"));
 const rootReducer = redux_1.combineReducers({
     authController: reducers_1.default,
     homePage: reducers_2.default,
     layout: reducers_3.default,
+    loginForm: reducers_4.default,
+    registerForm: reducers_5.default,
 });
 exports.default = rootReducer;
 
@@ -62661,6 +62725,165 @@ exports.default = (state = initialState, action) => {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LAYOUT_CATEGORIES_LOADED = "LAYOUT_CATEGORIES_LOADED";
 exports.LAYOUT_MOBILE_SIDEBAR_TOGGLE = "LAYOUT_MOBILE_SIDEBAR_TOGGLE";
+
+
+/***/ }),
+
+/***/ "./resources/ts/store/LoginForm/actions.ts":
+/*!*************************************************!*\
+  !*** ./resources/ts/store/LoginForm/actions.ts ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const types_1 = __webpack_require__(/*! ./types */ "./resources/ts/store/LoginForm/types.ts");
+exports.changeEmail = (email) => ({
+    email,
+    type: types_1.LOGIN_FORM_EMAIL_CHANGE
+});
+exports.changePassword = (password) => ({
+    password,
+    type: types_1.LOGIN_FORM_PASSWORD_CHANGE
+});
+
+
+/***/ }),
+
+/***/ "./resources/ts/store/LoginForm/reducers.ts":
+/*!**************************************************!*\
+  !*** ./resources/ts/store/LoginForm/reducers.ts ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const types_1 = __webpack_require__(/*! ./types */ "./resources/ts/store/LoginForm/types.ts");
+const initialState = {
+    email: "",
+    password: ""
+};
+exports.default = (state = initialState, action) => {
+    switch (action.type) {
+        case types_1.LOGIN_FORM_EMAIL_CHANGE:
+            return {
+                ...state,
+                email: action.email
+            };
+        case types_1.LOGIN_FORM_PASSWORD_CHANGE:
+            return {
+                ...state,
+                password: action.password
+            };
+        default:
+            return state;
+    }
+};
+
+
+/***/ }),
+
+/***/ "./resources/ts/store/LoginForm/types.ts":
+/*!***********************************************!*\
+  !*** ./resources/ts/store/LoginForm/types.ts ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.LOGIN_FORM_EMAIL_CHANGE = "LOGIN_FORM_EMAIL_CHANGE";
+exports.LOGIN_FORM_PASSWORD_CHANGE = "LOGIN_FORM_PASSWORD_CHANGE";
+
+
+/***/ }),
+
+/***/ "./resources/ts/store/RegisterForm/actions.ts":
+/*!****************************************************!*\
+  !*** ./resources/ts/store/RegisterForm/actions.ts ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const types_1 = __webpack_require__(/*! ./types */ "./resources/ts/store/RegisterForm/types.ts");
+exports.changeEmail = (email) => ({
+    email,
+    type: types_1.REGISTER_FORM_CHANGE_EMAIL
+});
+exports.changePassword = (password) => ({
+    password,
+    type: types_1.REGISTER_F0RM_CHANGE_PASSWORD
+});
+exports.changePasswordConfirmation = (passwordConfirmation) => ({
+    passwordConfirmation,
+    type: types_1.REGISTER_FORM_CHANGE_PASSWORD_CONFIRMATION
+});
+
+
+/***/ }),
+
+/***/ "./resources/ts/store/RegisterForm/reducers.ts":
+/*!*****************************************************!*\
+  !*** ./resources/ts/store/RegisterForm/reducers.ts ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const types_1 = __webpack_require__(/*! ./types */ "./resources/ts/store/RegisterForm/types.ts");
+const initialState = {
+    email: "",
+    password: "",
+    passwordConfirmation: ""
+};
+exports.default = (state = initialState, action) => {
+    switch (action.type) {
+        case types_1.REGISTER_F0RM_CHANGE_PASSWORD:
+            return {
+                ...state,
+                password: action.password
+            };
+        case types_1.REGISTER_FORM_CHANGE_EMAIL:
+            return {
+                ...state,
+                email: action.email
+            };
+        case types_1.REGISTER_FORM_CHANGE_PASSWORD_CONFIRMATION:
+            return {
+                ...state,
+                passwordConfirmation: action.passwordConfirmation
+            };
+        default:
+            return state;
+    }
+};
+
+
+/***/ }),
+
+/***/ "./resources/ts/store/RegisterForm/types.ts":
+/*!**************************************************!*\
+  !*** ./resources/ts/store/RegisterForm/types.ts ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.REGISTER_FORM_CHANGE_EMAIL = "REGISTER_FORM_CHANGE_EMAIL";
+exports.REGISTER_F0RM_CHANGE_PASSWORD = "REGISTER_F0RM_CHANGE_PASSWORD";
+exports.REGISTER_FORM_CHANGE_PASSWORD_CONFIRMATION = "REGISTER_FORM_CHANGE_PASSWORD_CONFIRMATION";
 
 
 /***/ }),
