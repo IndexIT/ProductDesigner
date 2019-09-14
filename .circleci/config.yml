@@ -25,7 +25,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - ""
+            - "9e:98:74:ff:99:18:96:7b:fa:42:c0:07:90:9f:1a:4c"
 
       - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
       - run: sudo apt-get install rsync
@@ -77,12 +77,12 @@ jobs:
             sed -i "/^DB_DATABASE/c\DB_DATABASE=$DB_DATABASE" .env
             sed -i "/^DB_USERNAME/c\DB_USERNAME=$DB_USERNAME" .env
             sed -i "/^DB_PASSWORD/c\DB_PASSWORD=$DB_PASSWORD" .env
-            sed -i "/^MAIL_DRIVER/c\MAIL_DRIVER=$MAIL_DRIVER" .env
-            sed -i "/^MAIL_HOST/c\MAIL_HOST=$MAIL_HOST" .env
-            sed -i "/^MAIL_PORT/c\MAIL_PORT=$MAIL_PORT" .env
-            sed -i "/^MAIL_USERNAME/c\MAIL_USERNAME=$MAIL_USERNAME" .env
-            sed -i "/^MAIL_PASSWORD/c\MAIL_PASSWORD=$MAIL_PASSWORD" .env
-            sed -i "/^MAIL_ENCRYPTION/c\MAIL_ENCRYPTION=$MAIL_ENCRYPTION" .env
+            # sed -i "/^MAIL_DRIVER/c\MAIL_DRIVER=$MAIL_DRIVER" .env
+            # sed -i "/^MAIL_HOST/c\MAIL_HOST=$MAIL_HOST" .env
+            # sed -i "/^MAIL_PORT/c\MAIL_PORT=$MAIL_PORT" .env
+            # sed -i "/^MAIL_USERNAME/c\MAIL_USERNAME=$MAIL_USERNAME" .env
+            # sed -i "/^MAIL_PASSWORD/c\MAIL_PASSWORD=$MAIL_PASSWORD" .env
+            # sed -i "/^MAIL_ENCRYPTION/c\MAIL_ENCRYPTION=$MAIL_ENCRYPTION" .env
             sed -i "/^MIX_APP_DEBUG/c\MIX_APP_DEBUG=$MIX_APP_DEBUG" .env
             sed -i "/^MIX_APP_URL/c\MIX_APP_URL=$MIX_APP_URL" .env
       # Create rsync exclude list
