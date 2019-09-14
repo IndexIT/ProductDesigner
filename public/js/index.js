@@ -561,6 +561,41 @@ exports.default = _default;
 
 /***/ }),
 
+/***/ "./node_modules/@material-ui/core/colors/green.js":
+/*!********************************************************!*\
+  !*** ./node_modules/@material-ui/core/colors/green.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var green = {
+  50: '#e8f5e9',
+  100: '#c8e6c9',
+  200: '#a5d6a7',
+  300: '#81c784',
+  400: '#66bb6a',
+  500: '#4caf50',
+  600: '#43a047',
+  700: '#388e3c',
+  800: '#2e7d32',
+  900: '#1b5e20',
+  A100: '#b9f6ca',
+  A200: '#69f0ae',
+  A400: '#00e676',
+  A700: '#00c853'
+};
+var _default = green;
+exports.default = _default;
+
+/***/ }),
+
 /***/ "./node_modules/@material-ui/core/colors/grey.js":
 /*!*******************************************************!*\
   !*** ./node_modules/@material-ui/core/colors/grey.js ***!
@@ -2785,6 +2820,177 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/@material-ui/core/esm/ClickAwayListener/ClickAwayListener.js":
+/*!***********************************************************************************!*\
+  !*** ./node_modules/@material-ui/core/esm/ClickAwayListener/ClickAwayListener.js ***!
+  \***********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _utils_ownerDocument__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/ownerDocument */ "./node_modules/@material-ui/core/esm/utils/ownerDocument.js");
+/* harmony import */ var _utils_reactHelpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/reactHelpers */ "./node_modules/@material-ui/core/esm/utils/reactHelpers.js");
+/* harmony import */ var _utils_useEventCallback__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/useEventCallback */ "./node_modules/@material-ui/core/esm/utils/useEventCallback.js");
+/* harmony import */ var _material_ui_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/utils */ "./node_modules/@material-ui/utils/esm/index.js");
+
+
+
+
+
+
+
+
+function useMountedRef() {
+  var mountedRef = react__WEBPACK_IMPORTED_MODULE_0___default.a.useRef(false);
+  react__WEBPACK_IMPORTED_MODULE_0___default.a.useEffect(function () {
+    mountedRef.current = true;
+    return function () {
+      mountedRef.current = false;
+    };
+  }, []);
+  return mountedRef;
+}
+
+function mapEventPropToEvent(eventProp) {
+  return eventProp.substring(2).toLowerCase();
+}
+/**
+ * Listen for click events that occur somewhere in the document, outside of the element itself.
+ * For instance, if you need to hide a menu when people click anywhere else on your page.
+ */
+
+
+var ClickAwayListener = react__WEBPACK_IMPORTED_MODULE_0___default.a.forwardRef(function ClickAwayListener(props, ref) {
+  var children = props.children,
+      _props$mouseEvent = props.mouseEvent,
+      mouseEvent = _props$mouseEvent === void 0 ? 'onClick' : _props$mouseEvent,
+      _props$touchEvent = props.touchEvent,
+      touchEvent = _props$touchEvent === void 0 ? 'onTouchEnd' : _props$touchEvent,
+      onClickAway = props.onClickAway;
+  var mountedRef = useMountedRef();
+  var movedRef = react__WEBPACK_IMPORTED_MODULE_0___default.a.useRef(false);
+  var nodeRef = react__WEBPACK_IMPORTED_MODULE_0___default.a.useRef(null);
+  var handleNodeRef = Object(_utils_reactHelpers__WEBPACK_IMPORTED_MODULE_4__["useForkRef"])(nodeRef, ref); // can be removed once we drop support for non ref forwarding class components
+
+  var handleOwnRef = react__WEBPACK_IMPORTED_MODULE_0___default.a.useCallback(function (instance) {
+    // #StrictMode ready
+    Object(_utils_reactHelpers__WEBPACK_IMPORTED_MODULE_4__["setRef"])(handleNodeRef, react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.findDOMNode(instance));
+  }, [handleNodeRef]);
+  var handleRef = Object(_utils_reactHelpers__WEBPACK_IMPORTED_MODULE_4__["useForkRef"])(children.ref, handleOwnRef);
+  var handleClickAway = Object(_utils_useEventCallback__WEBPACK_IMPORTED_MODULE_5__["default"])(function (event) {
+    // Ignore events that have been `event.preventDefault()` marked.
+    if (event.defaultPrevented) {
+      return;
+    } // IE 11 support, which trigger the handleClickAway even after the unbind
+
+
+    if (!mountedRef.current) {
+      return;
+    } // Do not act if user performed touchmove
+
+
+    if (movedRef.current) {
+      movedRef.current = false;
+      return;
+    }
+
+    var node = nodeRef.current; // The child might render null.
+
+    if (!node) {
+      return;
+    }
+
+    var doc = Object(_utils_ownerDocument__WEBPACK_IMPORTED_MODULE_3__["default"])(node);
+
+    if (doc.documentElement && doc.documentElement.contains(event.target) && !node.contains(event.target)) {
+      onClickAway(event);
+    }
+  });
+  var handleTouchMove = react__WEBPACK_IMPORTED_MODULE_0___default.a.useCallback(function () {
+    movedRef.current = true;
+  }, []);
+  react__WEBPACK_IMPORTED_MODULE_0___default.a.useEffect(function () {
+    if (touchEvent !== false) {
+      var mappedTouchEvent = mapEventPropToEvent(touchEvent);
+      document.addEventListener(mappedTouchEvent, handleClickAway);
+      document.addEventListener('touchmove', handleTouchMove);
+      return function () {
+        document.removeEventListener(mappedTouchEvent, handleClickAway);
+        document.removeEventListener('touchmove', handleTouchMove);
+      };
+    }
+
+    return undefined;
+  }, [handleClickAway, handleTouchMove, touchEvent]);
+  react__WEBPACK_IMPORTED_MODULE_0___default.a.useEffect(function () {
+    if (mouseEvent !== false) {
+      var mappedMouseEvent = mapEventPropToEvent(mouseEvent);
+      document.addEventListener(mappedMouseEvent, handleClickAway);
+      return function () {
+        document.removeEventListener(mappedMouseEvent, handleClickAway);
+      };
+    }
+
+    return undefined;
+  }, [handleClickAway, mouseEvent]);
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.cloneElement(children, {
+    ref: handleRef
+  }));
+});
+ true ? ClickAwayListener.propTypes = {
+  /**
+   * The wrapped element.
+   */
+  children: _material_ui_utils__WEBPACK_IMPORTED_MODULE_6__["elementAcceptingRef"].isRequired,
+
+  /**
+   * The mouse event to listen to. You can disable the listener by providing `false`.
+   */
+  mouseEvent: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.oneOf(['onClick', 'onMouseDown', 'onMouseUp', false]),
+
+  /**
+   * Callback fired when a "click away" event is detected.
+   */
+  onClickAway: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.func.isRequired,
+
+  /**
+   * The touch event to listen to. You can disable the listener by providing `false`.
+   */
+  touchEvent: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.oneOf(['onTouchStart', 'onTouchEnd', false])
+} : undefined;
+
+if (true) {
+  // eslint-disable-next-line
+  ClickAwayListener['propTypes' + ''] = Object(_material_ui_utils__WEBPACK_IMPORTED_MODULE_6__["exactProp"])(ClickAwayListener.propTypes);
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (ClickAwayListener);
+
+/***/ }),
+
+/***/ "./node_modules/@material-ui/core/esm/ClickAwayListener/index.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/@material-ui/core/esm/ClickAwayListener/index.js ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ClickAwayListener__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ClickAwayListener */ "./node_modules/@material-ui/core/esm/ClickAwayListener/ClickAwayListener.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _ClickAwayListener__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+
+
+
+/***/ }),
+
 /***/ "./node_modules/@material-ui/core/esm/Divider/Divider.js":
 /*!***************************************************************!*\
   !*** ./node_modules/@material-ui/core/esm/Divider/Divider.js ***!
@@ -4686,6 +4892,249 @@ Grow.muiSupportAuto = true;
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Grow__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Grow */ "./node_modules/@material-ui/core/esm/Grow/Grow.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _Grow__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@material-ui/core/esm/IconButton/IconButton.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/@material-ui/core/esm/IconButton/IconButton.js ***!
+  \*********************************************************************/
+/*! exports provided: styles, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "styles", function() { return styles; });
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var _babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.m.js");
+/* harmony import */ var _material_ui_utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material-ui/utils */ "./node_modules/@material-ui/utils/esm/index.js");
+/* harmony import */ var _styles_withStyles__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../styles/withStyles */ "./node_modules/@material-ui/core/esm/styles/withStyles.js");
+/* harmony import */ var _styles_colorManipulator__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../styles/colorManipulator */ "./node_modules/@material-ui/core/esm/styles/colorManipulator.js");
+/* harmony import */ var _ButtonBase__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../ButtonBase */ "./node_modules/@material-ui/core/esm/ButtonBase/index.js");
+/* harmony import */ var _utils_helpers__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers */ "./node_modules/@material-ui/core/esm/utils/helpers.js");
+
+
+
+
+
+
+
+
+
+
+var styles = function styles(theme) {
+  return {
+    /* Styles applied to the root element. */
+    root: {
+      textAlign: 'center',
+      flex: '0 0 auto',
+      fontSize: theme.typography.pxToRem(24),
+      padding: 12,
+      borderRadius: '50%',
+      overflow: 'visible',
+      // Explicitly set the default value to solve a bug on IE 11.
+      color: theme.palette.action.active,
+      transition: theme.transitions.create('background-color', {
+        duration: theme.transitions.duration.shortest
+      }),
+      '&:hover': {
+        backgroundColor: Object(_styles_colorManipulator__WEBPACK_IMPORTED_MODULE_7__["fade"])(theme.palette.action.active, theme.palette.action.hoverOpacity),
+        // Reset on touch devices, it doesn't add specificity
+        '@media (hover: none)': {
+          backgroundColor: 'transparent'
+        }
+      },
+      '&$disabled': {
+        backgroundColor: 'transparent',
+        color: theme.palette.action.disabled
+      }
+    },
+
+    /* Styles applied to the root element if `edge="start"`. */
+    edgeStart: {
+      marginLeft: -12,
+      '$sizeSmall&': {
+        marginLeft: -3
+      }
+    },
+
+    /* Styles applied to the root element if `edge="end"`. */
+    edgeEnd: {
+      marginRight: -12,
+      '$sizeSmall&': {
+        marginRight: -3
+      }
+    },
+
+    /* Styles applied to the root element if `color="inherit"`. */
+    colorInherit: {
+      color: 'inherit'
+    },
+
+    /* Styles applied to the root element if `color="primary"`. */
+    colorPrimary: {
+      color: theme.palette.primary.main,
+      '&:hover': {
+        backgroundColor: Object(_styles_colorManipulator__WEBPACK_IMPORTED_MODULE_7__["fade"])(theme.palette.primary.main, theme.palette.action.hoverOpacity),
+        // Reset on touch devices, it doesn't add specificity
+        '@media (hover: none)': {
+          backgroundColor: 'transparent'
+        }
+      }
+    },
+
+    /* Styles applied to the root element if `color="secondary"`. */
+    colorSecondary: {
+      color: theme.palette.secondary.main,
+      '&:hover': {
+        backgroundColor: Object(_styles_colorManipulator__WEBPACK_IMPORTED_MODULE_7__["fade"])(theme.palette.secondary.main, theme.palette.action.hoverOpacity),
+        // Reset on touch devices, it doesn't add specificity
+        '@media (hover: none)': {
+          backgroundColor: 'transparent'
+        }
+      }
+    },
+
+    /* Pseudo-class applied to the root element if `disabled={true}`. */
+    disabled: {},
+
+    /* Styles applied to the root element if `size="small"`. */
+    sizeSmall: {
+      padding: 3,
+      fontSize: theme.typography.pxToRem(18)
+    },
+
+    /* Styles applied to the children container element. */
+    label: {
+      width: '100%',
+      display: 'flex',
+      alignItems: 'inherit',
+      justifyContent: 'inherit'
+    }
+  };
+};
+/**
+ * Refer to the [Icons](/components/icons/) section of the documentation
+ * regarding the available icon options.
+ */
+
+var IconButton = react__WEBPACK_IMPORTED_MODULE_2___default.a.forwardRef(function IconButton(props, ref) {
+  var _props$edge = props.edge,
+      edge = _props$edge === void 0 ? false : _props$edge,
+      children = props.children,
+      classes = props.classes,
+      className = props.className,
+      _props$color = props.color,
+      color = _props$color === void 0 ? 'default' : _props$color,
+      _props$disabled = props.disabled,
+      disabled = _props$disabled === void 0 ? false : _props$disabled,
+      _props$disableFocusRi = props.disableFocusRipple,
+      disableFocusRipple = _props$disableFocusRi === void 0 ? false : _props$disableFocusRi,
+      _props$size = props.size,
+      size = _props$size === void 0 ? 'medium' : _props$size,
+      other = Object(_babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__["default"])(props, ["edge", "children", "classes", "className", "color", "disabled", "disableFocusRipple", "size"]);
+
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_ButtonBase__WEBPACK_IMPORTED_MODULE_8__["default"], Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({
+    className: Object(clsx__WEBPACK_IMPORTED_MODULE_4__["default"])(classes.root, className, color !== 'default' && classes["color".concat(Object(_utils_helpers__WEBPACK_IMPORTED_MODULE_9__["capitalize"])(color))], disabled && classes.disabled, {
+      small: classes["size".concat(Object(_utils_helpers__WEBPACK_IMPORTED_MODULE_9__["capitalize"])(size))]
+    }[size], {
+      start: classes.edgeStart,
+      end: classes.edgeEnd
+    }[edge]),
+    centerRipple: true,
+    focusRipple: !disableFocusRipple,
+    disabled: disabled,
+    ref: ref
+  }, other), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("span", {
+    className: classes.label
+  }, children));
+});
+ true ? IconButton.propTypes = {
+  /**
+   * The icon element.
+   */
+  children: Object(_material_ui_utils__WEBPACK_IMPORTED_MODULE_5__["chainPropTypes"])(prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.node, function (props) {
+    var found = react__WEBPACK_IMPORTED_MODULE_2___default.a.Children.toArray(props.children).some(function (child) {
+      return react__WEBPACK_IMPORTED_MODULE_2___default.a.isValidElement(child) && child.props.onClick;
+    });
+
+    if (found) {
+      return new Error(['Material-UI: you are providing an onClick event listener ' + 'to a child of a button element.', 'Firefox will never trigger the event.', 'You should move the onClick listener to the parent button element.', 'https://github.com/mui-org/material-ui/issues/13957'].join('\n'));
+    }
+
+    return null;
+  }),
+
+  /**
+   * Override or extend the styles applied to the component.
+   * See [CSS API](#css) below for more details.
+   */
+  classes: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.object.isRequired,
+
+  /**
+   * @ignore
+   */
+  className: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.string,
+
+  /**
+   * The color of the component. It supports those theme colors that make sense for this component.
+   */
+  color: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.oneOf(['default', 'inherit', 'primary', 'secondary']),
+
+  /**
+   * If `true`, the button will be disabled.
+   */
+  disabled: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.bool,
+
+  /**
+   * If `true`, the  keyboard focus ripple will be disabled.
+   * `disableRipple` must also be true.
+   */
+  disableFocusRipple: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.bool,
+
+  /**
+   * If `true`, the ripple effect will be disabled.
+   */
+  disableRipple: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.bool,
+
+  /**
+   * If given, uses a negative margin to counteract the padding on one
+   * side (this is often helpful for aligning the left or right
+   * side of the icon with content above or below, without ruining the border
+   * size and shape).
+   */
+  edge: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.oneOf(['start', 'end', false]),
+
+  /**
+   * The size of the button.
+   * `small` is equivalent to the dense button styling.
+   */
+  size: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.oneOf(['small', 'medium'])
+} : undefined;
+/* harmony default export */ __webpack_exports__["default"] = (Object(_styles_withStyles__WEBPACK_IMPORTED_MODULE_6__["default"])(styles, {
+  name: 'MuiIconButton'
+})(IconButton));
+
+/***/ }),
+
+/***/ "./node_modules/@material-ui/core/esm/IconButton/index.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/@material-ui/core/esm/IconButton/index.js ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _IconButton__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./IconButton */ "./node_modules/@material-ui/core/esm/IconButton/IconButton.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _IconButton__WEBPACK_IMPORTED_MODULE_0__["default"]; });
 
 
 
@@ -10130,6 +10579,582 @@ var SelectInput = react__WEBPACK_IMPORTED_MODULE_4___default.a.forwardRef(functi
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Select__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Select */ "./node_modules/@material-ui/core/esm/Select/Select.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _Select__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@material-ui/core/esm/Snackbar/Snackbar.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/@material-ui/core/esm/Snackbar/Snackbar.js ***!
+  \*****************************************************************/
+/*! exports provided: styles, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "styles", function() { return styles; });
+/* harmony import */ var _babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.m.js");
+/* harmony import */ var _styles_withStyles__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../styles/withStyles */ "./node_modules/@material-ui/core/esm/styles/withStyles.js");
+/* harmony import */ var _styles_transitions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../styles/transitions */ "./node_modules/@material-ui/core/esm/styles/transitions.js");
+/* harmony import */ var _ClickAwayListener__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../ClickAwayListener */ "./node_modules/@material-ui/core/esm/ClickAwayListener/index.js");
+/* harmony import */ var _utils_helpers__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers */ "./node_modules/@material-ui/core/esm/utils/helpers.js");
+/* harmony import */ var _Grow__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Grow */ "./node_modules/@material-ui/core/esm/Grow/index.js");
+/* harmony import */ var _SnackbarContent__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../SnackbarContent */ "./node_modules/@material-ui/core/esm/SnackbarContent/index.js");
+
+
+
+
+
+
+
+
+
+
+
+
+var styles = function styles(theme) {
+  var top1 = {
+    top: 8
+  };
+  var bottom1 = {
+    bottom: 8
+  };
+  var right = {
+    justifyContent: 'flex-end'
+  };
+  var left = {
+    justifyContent: 'flex-start'
+  };
+  var top3 = {
+    top: 24
+  };
+  var bottom3 = {
+    bottom: 24
+  };
+  var right3 = {
+    right: 24
+  };
+  var left3 = {
+    left: 24
+  };
+  var center = {
+    left: '50%',
+    right: 'auto',
+    transform: 'translateX(-50%)'
+  };
+  return {
+    /* Styles applied to the root element. */
+    root: {
+      zIndex: theme.zIndex.snackbar,
+      position: 'fixed',
+      display: 'flex',
+      left: 8,
+      right: 8,
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+
+    /* Styles applied to the root element if `anchorOrigin={{ 'top', 'center' }}`. */
+    anchorOriginTopCenter: Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__["default"])({}, top1, Object(_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__["default"])({}, theme.breakpoints.up('sm'), Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__["default"])({}, top3, {}, center))),
+
+    /* Styles applied to the root element if `anchorOrigin={{ 'bottom', 'center' }}`. */
+    anchorOriginBottomCenter: Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__["default"])({}, bottom1, Object(_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__["default"])({}, theme.breakpoints.up('sm'), Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__["default"])({}, bottom3, {}, center))),
+
+    /* Styles applied to the root element if `anchorOrigin={{ 'top', 'right' }}`. */
+    anchorOriginTopRight: Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__["default"])({}, top1, {}, right, Object(_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__["default"])({}, theme.breakpoints.up('sm'), Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__["default"])({
+      left: 'auto'
+    }, top3, {}, right3))),
+
+    /* Styles applied to the root element if `anchorOrigin={{ 'bottom', 'right' }}`. */
+    anchorOriginBottomRight: Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__["default"])({}, bottom1, {}, right, Object(_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__["default"])({}, theme.breakpoints.up('sm'), Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__["default"])({
+      left: 'auto'
+    }, bottom3, {}, right3))),
+
+    /* Styles applied to the root element if `anchorOrigin={{ 'top', 'left' }}`. */
+    anchorOriginTopLeft: Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__["default"])({}, top1, {}, left, Object(_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__["default"])({}, theme.breakpoints.up('sm'), Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__["default"])({
+      right: 'auto'
+    }, top3, {}, left3))),
+
+    /* Styles applied to the root element if `anchorOrigin={{ 'bottom', 'left' }}`. */
+    anchorOriginBottomLeft: Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__["default"])({}, bottom1, {}, left, Object(_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__["default"])({}, theme.breakpoints.up('sm'), Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__["default"])({
+      right: 'auto'
+    }, bottom3, {}, left3)))
+  };
+};
+var Snackbar = react__WEBPACK_IMPORTED_MODULE_3___default.a.forwardRef(function Snackbar(props, ref) {
+  var action = props.action,
+      _props$anchorOrigin = props.anchorOrigin;
+  _props$anchorOrigin = _props$anchorOrigin === void 0 ? {
+    vertical: 'bottom',
+    horizontal: 'center'
+  } : _props$anchorOrigin;
+
+  var vertical = _props$anchorOrigin.vertical,
+      horizontal = _props$anchorOrigin.horizontal,
+      autoHideDuration = props.autoHideDuration,
+      children = props.children,
+      classes = props.classes,
+      className = props.className,
+      ClickAwayListenerProps = props.ClickAwayListenerProps,
+      ContentProps = props.ContentProps,
+      _props$disableWindowB = props.disableWindowBlurListener,
+      disableWindowBlurListener = _props$disableWindowB === void 0 ? false : _props$disableWindowB,
+      message = props.message,
+      onClose = props.onClose,
+      onEnter = props.onEnter,
+      onEntered = props.onEntered,
+      onEntering = props.onEntering,
+      onExit = props.onExit,
+      onExited = props.onExited,
+      onExiting = props.onExiting,
+      onMouseEnter = props.onMouseEnter,
+      onMouseLeave = props.onMouseLeave,
+      open = props.open,
+      resumeHideDuration = props.resumeHideDuration,
+      _props$TransitionComp = props.TransitionComponent,
+      TransitionComponent = _props$TransitionComp === void 0 ? _Grow__WEBPACK_IMPORTED_MODULE_10__["default"] : _props$TransitionComp,
+      _props$transitionDura = props.transitionDuration,
+      transitionDuration = _props$transitionDura === void 0 ? {
+    enter: _styles_transitions__WEBPACK_IMPORTED_MODULE_7__["duration"].enteringScreen,
+    exit: _styles_transitions__WEBPACK_IMPORTED_MODULE_7__["duration"].leavingScreen
+  } : _props$transitionDura,
+      TransitionProps = props.TransitionProps,
+      other = Object(_babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__["default"])(props, ["action", "anchorOrigin", "autoHideDuration", "children", "classes", "className", "ClickAwayListenerProps", "ContentProps", "disableWindowBlurListener", "message", "onClose", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "onMouseEnter", "onMouseLeave", "open", "resumeHideDuration", "TransitionComponent", "transitionDuration", "TransitionProps"]);
+
+  var timerAutoHide = react__WEBPACK_IMPORTED_MODULE_3___default.a.useRef();
+
+  var _React$useState = react__WEBPACK_IMPORTED_MODULE_3___default.a.useState(true),
+      exited = _React$useState[0],
+      setExited = _React$useState[1]; // Timer that controls delay before snackbar auto hides
+
+
+  var setAutoHideTimer = react__WEBPACK_IMPORTED_MODULE_3___default.a.useCallback(function (autoHideDurationParam) {
+    var autoHideDurationBefore = autoHideDurationParam != null ? autoHideDurationParam : autoHideDuration;
+
+    if (!onClose || autoHideDurationBefore == null) {
+      return;
+    }
+
+    clearTimeout(timerAutoHide.current);
+    timerAutoHide.current = setTimeout(function () {
+      var autoHideDurationAfter = autoHideDurationParam != null ? autoHideDurationParam : autoHideDuration;
+
+      if (!onClose || autoHideDurationAfter == null) {
+        return;
+      }
+
+      onClose(null, 'timeout');
+    }, autoHideDurationBefore);
+  }, [autoHideDuration, onClose]);
+  react__WEBPACK_IMPORTED_MODULE_3___default.a.useEffect(function () {
+    if (open) {
+      setAutoHideTimer();
+    }
+
+    return function () {
+      clearTimeout(timerAutoHide.current);
+    };
+  }, [open, setAutoHideTimer]); // Pause the timer when the user is interacting with the Snackbar
+  // or when the user hide the window.
+
+  var handlePause = function handlePause() {
+    clearTimeout(timerAutoHide.current);
+  }; // Restart the timer when the user is no longer interacting with the Snackbar
+  // or when the window is shown back.
+
+
+  var handleResume = react__WEBPACK_IMPORTED_MODULE_3___default.a.useCallback(function () {
+    if (autoHideDuration != null) {
+      if (resumeHideDuration != null) {
+        setAutoHideTimer(resumeHideDuration);
+        return;
+      }
+
+      setAutoHideTimer(autoHideDuration * 0.5);
+    }
+  }, [autoHideDuration, resumeHideDuration, setAutoHideTimer]);
+
+  var handleMouseEnter = function handleMouseEnter(event) {
+    if (onMouseEnter) {
+      onMouseEnter(event);
+    }
+
+    handlePause();
+  };
+
+  var handleMouseLeave = function handleMouseLeave(event) {
+    if (onMouseLeave) {
+      onMouseLeave(event);
+    }
+
+    handleResume();
+  };
+
+  var handleClickAway = function handleClickAway(event) {
+    if (onClose) {
+      onClose(event, 'clickaway');
+    }
+  };
+
+  var handleExited = function handleExited() {
+    setExited(true);
+  };
+
+  var handleEnter = function handleEnter() {
+    setExited(false);
+  };
+
+  react__WEBPACK_IMPORTED_MODULE_3___default.a.useEffect(function () {
+    if (!disableWindowBlurListener && open) {
+      window.addEventListener('focus', handleResume);
+      window.addEventListener('blur', handlePause);
+      return function () {
+        window.removeEventListener('focus', handleResume);
+        window.removeEventListener('blur', handlePause);
+      };
+    }
+
+    return undefined;
+  }, [disableWindowBlurListener, handleResume, open]); // So we only render active snackbars.
+
+  if (!open && exited) {
+    return null;
+  }
+
+  return react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(_ClickAwayListener__WEBPACK_IMPORTED_MODULE_8__["default"], Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__["default"])({
+    onClickAway: handleClickAway
+  }, ClickAwayListenerProps), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__["default"])({
+    className: Object(clsx__WEBPACK_IMPORTED_MODULE_5__["default"])(classes.root, classes["anchorOrigin".concat(Object(_utils_helpers__WEBPACK_IMPORTED_MODULE_9__["capitalize"])(vertical)).concat(Object(_utils_helpers__WEBPACK_IMPORTED_MODULE_9__["capitalize"])(horizontal))], className),
+    onMouseEnter: handleMouseEnter,
+    onMouseLeave: handleMouseLeave,
+    ref: ref
+  }, other), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(TransitionComponent, Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__["default"])({
+    appear: true,
+    in: open,
+    onEnter: Object(_utils_helpers__WEBPACK_IMPORTED_MODULE_9__["createChainedFunction"])(handleEnter, onEnter),
+    onEntered: onEntered,
+    onEntering: onEntering,
+    onExit: onExit,
+    onExited: Object(_utils_helpers__WEBPACK_IMPORTED_MODULE_9__["createChainedFunction"])(handleExited, onExited),
+    onExiting: onExiting,
+    timeout: transitionDuration,
+    direction: vertical === 'top' ? 'down' : 'up'
+  }, TransitionProps), children || react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(_SnackbarContent__WEBPACK_IMPORTED_MODULE_11__["default"], Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__["default"])({
+    message: message,
+    action: action
+  }, ContentProps)))));
+});
+ true ? Snackbar.propTypes = {
+  /**
+   * The action to display.
+   */
+  action: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.node,
+
+  /**
+   * The anchor of the `Snackbar`.
+   */
+  anchorOrigin: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.shape({
+    horizontal: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.oneOf(['left', 'center', 'right']).isRequired,
+    vertical: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.oneOf(['top', 'bottom']).isRequired
+  }),
+
+  /**
+   * The number of milliseconds to wait before automatically calling the
+   * `onClose` function. `onClose` should then set the state of the `open`
+   * prop to hide the Snackbar. This behavior is disabled by default with
+   * the `null` value.
+   */
+  autoHideDuration: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.number,
+
+  /**
+   * Replace the `SnackbarContent` component.
+   */
+  children: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.element,
+
+  /**
+   * Override or extend the styles applied to the component.
+   * See [CSS API](#css) below for more details.
+   */
+  classes: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.object.isRequired,
+
+  /**
+   * @ignore
+   */
+  className: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.string,
+
+  /**
+   * Props applied to the `ClickAwayListener` element.
+   */
+  ClickAwayListenerProps: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.object,
+
+  /**
+   * Props applied to the [`SnackbarContent`](/api/snackbar-content/) element.
+   */
+  ContentProps: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.object,
+
+  /**
+   * If `true`, the `autoHideDuration` timer will expire even if the window is not focused.
+   */
+  disableWindowBlurListener: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.bool,
+
+  /**
+   * When displaying multiple consecutive Snackbars from a parent rendering a single
+   * <Snackbar/>, add the key prop to ensure independent treatment of each message.
+   * e.g. <Snackbar key={message} />, otherwise, the message may update-in-place and
+   * features such as autoHideDuration may be canceled.
+   */
+  key: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.any,
+
+  /**
+   * The message to display.
+   */
+  message: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.node,
+
+  /**
+   * Callback fired when the component requests to be closed.
+   * Typically `onClose` is used to set state in the parent component,
+   * which is used to control the `Snackbar` `open` prop.
+   * The `reason` parameter can optionally be used to control the response to `onClose`,
+   * for example ignoring `clickaway`.
+   *
+   * @param {object} event The event source of the callback.
+   * @param {string} reason Can be:`"timeout"` (`autoHideDuration` expired) or: `"clickaway"`.
+   */
+  onClose: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.func,
+
+  /**
+   * Callback fired before the transition is entering.
+   */
+  onEnter: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.func,
+
+  /**
+   * Callback fired when the transition has entered.
+   */
+  onEntered: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.func,
+
+  /**
+   * Callback fired when the transition is entering.
+   */
+  onEntering: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.func,
+
+  /**
+   * Callback fired before the transition is exiting.
+   */
+  onExit: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.func,
+
+  /**
+   * Callback fired when the transition has exited.
+   */
+  onExited: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.func,
+
+  /**
+   * Callback fired when the transition is exiting.
+   */
+  onExiting: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.func,
+
+  /**
+   * @ignore
+   */
+  onMouseEnter: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.func,
+
+  /**
+   * @ignore
+   */
+  onMouseLeave: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.func,
+
+  /**
+   * If true, `Snackbar` is open.
+   */
+  open: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.bool,
+
+  /**
+   * The number of milliseconds to wait before dismissing after user interaction.
+   * If `autoHideDuration` prop isn't specified, it does nothing.
+   * If `autoHideDuration` prop is specified but `resumeHideDuration` isn't,
+   * we default to `autoHideDuration / 2` ms.
+   */
+  resumeHideDuration: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.number,
+
+  /**
+   * The component used for the transition.
+   */
+  TransitionComponent: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.elementType,
+
+  /**
+   * The duration for the transition, in milliseconds.
+   * You may specify a single timeout for all transitions, or individually with an object.
+   */
+  transitionDuration: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.number, prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.shape({
+    enter: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.number,
+    exit: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.number
+  })]),
+
+  /**
+   * Props applied to the `Transition` element.
+   */
+  TransitionProps: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.object
+} : undefined;
+/* harmony default export */ __webpack_exports__["default"] = (Object(_styles_withStyles__WEBPACK_IMPORTED_MODULE_6__["default"])(styles, {
+  flip: false,
+  name: 'MuiSnackbar'
+})(Snackbar));
+
+/***/ }),
+
+/***/ "./node_modules/@material-ui/core/esm/Snackbar/index.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/@material-ui/core/esm/Snackbar/index.js ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Snackbar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Snackbar */ "./node_modules/@material-ui/core/esm/Snackbar/Snackbar.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _Snackbar__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@material-ui/core/esm/SnackbarContent/SnackbarContent.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/@material-ui/core/esm/SnackbarContent/SnackbarContent.js ***!
+  \*******************************************************************************/
+/*! exports provided: styles, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "styles", function() { return styles; });
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var _babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.m.js");
+/* harmony import */ var _styles_withStyles__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../styles/withStyles */ "./node_modules/@material-ui/core/esm/styles/withStyles.js");
+/* harmony import */ var _Paper__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Paper */ "./node_modules/@material-ui/core/esm/Paper/index.js");
+/* harmony import */ var _Typography__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Typography */ "./node_modules/@material-ui/core/esm/Typography/index.js");
+/* harmony import */ var _styles_colorManipulator__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../styles/colorManipulator */ "./node_modules/@material-ui/core/esm/styles/colorManipulator.js");
+
+
+
+
+
+
+
+
+
+
+var styles = function styles(theme) {
+  var emphasis = theme.palette.type === 'light' ? 0.8 : 0.98;
+  var backgroundColor = Object(_styles_colorManipulator__WEBPACK_IMPORTED_MODULE_9__["emphasize"])(theme.palette.background.default, emphasis);
+  return {
+    /* Styles applied to the root element. */
+    root: Object(_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_2__["default"])({
+      color: theme.palette.getContrastText(backgroundColor),
+      backgroundColor: backgroundColor,
+      display: 'flex',
+      alignItems: 'center',
+      flexWrap: 'wrap',
+      padding: '6px 16px',
+      borderRadius: theme.shape.borderRadius,
+      flexGrow: 1
+    }, theme.breakpoints.up('sm'), {
+      flexGrow: 'initial',
+      minWidth: 288
+    }),
+
+    /* Styles applied to the message wrapper element. */
+    message: {
+      padding: '8px 0'
+    },
+
+    /* Styles applied to the action wrapper element if `action` is provided. */
+    action: {
+      display: 'flex',
+      alignItems: 'center',
+      marginLeft: 'auto',
+      paddingLeft: 16,
+      marginRight: -8
+    }
+  };
+};
+var SnackbarContent = react__WEBPACK_IMPORTED_MODULE_3___default.a.forwardRef(function SnackbarContent(props, ref) {
+  var action = props.action,
+      classes = props.classes,
+      className = props.className,
+      message = props.message,
+      other = Object(_babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__["default"])(props, ["action", "classes", "className", "message"]);
+
+  return react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(_Paper__WEBPACK_IMPORTED_MODULE_7__["default"], Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({
+    component: _Typography__WEBPACK_IMPORTED_MODULE_8__["default"],
+    variant: "body2",
+    variantMapping: {
+      body1: 'div',
+      body2: 'div'
+    },
+    role: "alertdialog",
+    square: true,
+    elevation: 6,
+    className: Object(clsx__WEBPACK_IMPORTED_MODULE_5__["default"])(classes.root, className),
+    ref: ref
+  }, other), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
+    className: classes.message
+  }, message), action ? react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
+    className: classes.action
+  }, action) : null);
+});
+ true ? SnackbarContent.propTypes = {
+  /**
+   * The action to display.
+   */
+  action: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.node,
+
+  /**
+   * Override or extend the styles applied to the component.
+   * See [CSS API](#css) below for more details.
+   */
+  classes: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.object.isRequired,
+
+  /**
+   * @ignore
+   */
+  className: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.string,
+
+  /**
+   * The message to display.
+   */
+  message: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.node
+} : undefined;
+/* harmony default export */ __webpack_exports__["default"] = (Object(_styles_withStyles__WEBPACK_IMPORTED_MODULE_6__["default"])(styles, {
+  name: 'MuiSnackbarContent'
+})(SnackbarContent));
+
+/***/ }),
+
+/***/ "./node_modules/@material-ui/core/esm/SnackbarContent/index.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/@material-ui/core/esm/SnackbarContent/index.js ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SnackbarContent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SnackbarContent */ "./node_modules/@material-ui/core/esm/SnackbarContent/SnackbarContent.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _SnackbarContent__WEBPACK_IMPORTED_MODULE_0__["default"]; });
 
 
 
@@ -15833,6 +16858,31 @@ function createTypography(palette, typography) {
 
 /***/ }),
 
+/***/ "./node_modules/@material-ui/core/styles/defaultTheme.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/@material-ui/core/styles/defaultTheme.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _createMuiTheme = _interopRequireDefault(__webpack_require__(/*! ./createMuiTheme */ "./node_modules/@material-ui/core/styles/createMuiTheme.js"));
+
+var defaultTheme = (0, _createMuiTheme.default)();
+var _default = defaultTheme;
+exports.default = _default;
+
+/***/ }),
+
 /***/ "./node_modules/@material-ui/core/styles/shadows.js":
 /*!**********************************************************!*\
   !*** ./node_modules/@material-ui/core/styles/shadows.js ***!
@@ -15998,6 +17048,40 @@ exports.default = _default;
 
 /***/ }),
 
+/***/ "./node_modules/@material-ui/core/styles/withStyles.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/@material-ui/core/styles/withStyles.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/extends */ "./node_modules/@babel/runtime/helpers/extends.js"));
+
+var _styles = __webpack_require__(/*! @material-ui/styles */ "./node_modules/@material-ui/styles/esm/index.js");
+
+var _defaultTheme = _interopRequireDefault(__webpack_require__(/*! ./defaultTheme */ "./node_modules/@material-ui/core/styles/defaultTheme.js"));
+
+function withStyles(stylesOrCreator, options) {
+  return (0, _styles.withStyles)(stylesOrCreator, (0, _extends2.default)({
+    defaultTheme: _defaultTheme.default
+  }, options));
+}
+
+var _default = withStyles;
+exports.default = _default;
+
+/***/ }),
+
 /***/ "./node_modules/@material-ui/core/styles/zIndex.js":
 /*!*********************************************************!*\
   !*** ./node_modules/@material-ui/core/styles/zIndex.js ***!
@@ -16023,6 +17107,64 @@ var zIndex = {
   tooltip: 1500
 };
 var _default = zIndex;
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/@material-ui/icons/Close.js":
+/*!**************************************************!*\
+  !*** ./node_modules/@material-ui/icons/Close.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(/*! ./utils/createSvgIcon */ "./node_modules/@material-ui/icons/utils/createSvgIcon.js"));
+
+var _default = (0, _createSvgIcon.default)(_react.default.createElement("path", {
+  d: "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+}), 'Close');
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/@material-ui/icons/Refresh.js":
+/*!****************************************************!*\
+  !*** ./node_modules/@material-ui/icons/Refresh.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(/*! ./utils/createSvgIcon */ "./node_modules/@material-ui/icons/utils/createSvgIcon.js"));
+
+var _default = (0, _createSvgIcon.default)(_react.default.createElement("path", {
+  d: "M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"
+}), 'Refresh');
+
 exports.default = _default;
 
 /***/ }),
@@ -61707,8 +62849,10 @@ const request = (url, parameters, config = undefined) => axios_1.default
     success: false
 }));
 const authController = {
+    emailConfirmation: (userId) => request("user/emailConfirmation", { userId }),
     login: (email, password) => request("user/login", { email, password }),
-    userInfo: () => request("user/info")
+    register: (email, password, passwordConfirm) => request("user/signup", { email, password, passwordConfirm }),
+    userInfo: () => request("user/info"),
 };
 const layout = {
     categories: () => request("categories/header")
@@ -61719,7 +62863,7 @@ const homePage = {
 exports.default = {
     authController,
     homePage,
-    layout,
+    layout
 };
 
 
@@ -61928,37 +63072,44 @@ exports.mapStateToProps = (state) => ({
 });
 exports.mapDispatchToProps = (dispatch) => ({
     onChangeEmail: (email) => dispatch(actions_1.changeEmail(email)),
-    onChangePassword: (password) => dispatch(actions_1.changePassword(password))
+    onChangePassword: (password) => dispatch(actions_1.changePassword(password)),
+    onSubmit: (email, password) => dispatch(actions_1.login(email, password))
 });
 class LoginForm extends React.Component {
     constructor(props) {
         super(props);
         this.handleChangeEmail = this.handleChangeEmail.bind(this);
         this.handleChangePassword = this.handleChangePassword.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
     render() {
         const { classes, email, password } = this.props;
-        const emailError = helper_1.validate(email, "required", "email");
-        const passwordError = helper_1.validate(password, "required", "password", "min:6");
-        return (React.createElement("form", null,
+        const emailError = helper_1.validate(email, "email");
+        const passwordError = helper_1.validate(password, "password", "min:6");
+        return (React.createElement("form", { id: "loginForm", onSubmit: this.handleSubmit },
             React.createElement(TextField_1.default, { className: classes.input, margin: "dense", label: "Email", fullWidth: true, value: email, onChange: this.handleChangeEmail, error: !!emailError, helperText: emailError }),
             React.createElement(TextField_1.default, { className: classes.input, margin: "dense", label: "Password", type: "password", fullWidth: true, value: password, onChange: this.handleChangePassword, error: !!passwordError, helperText: passwordError }),
             React.createElement(Toolbar_1.default, null,
                 React.createElement("div", { className: classes.grow }),
-                React.createElement(Button_1.default, { color: "secondary", variant: "outlined" }, "Login")),
+                React.createElement(Button_1.default, { type: "submit", color: "secondary", variant: "outlined" }, "Login")),
             React.createElement(Divider_1.default, null),
             React.createElement("div", { className: classes.centerAlign },
                 React.createElement(Typography_1.default, { variant: "caption", align: "center" }, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Browse our products without Login"),
                 React.createElement("div", null,
                     React.createElement(Button_1.default, { size: "small", variant: "outlined" }, "Browse")))));
     }
-    handleChangePassword(e) {
+    handleChangeEmail(e) {
         const { onChangeEmail } = this.props;
         onChangeEmail(e.target.value);
     }
-    handleChangeEmail(e) {
+    handleChangePassword(e) {
         const { onChangePassword } = this.props;
         onChangePassword(e.target.value);
+    }
+    handleSubmit(e) {
+        e.preventDefault();
+        const { onSubmit, email, password } = this.props;
+        onSubmit(email, password);
     }
 }
 exports.default = react_redux_1.connect(exports.mapStateToProps, exports.mapDispatchToProps)(styler(LoginForm));
@@ -62111,11 +63262,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Button_1 = __importDefault(__webpack_require__(/*! @material-ui/core/Button */ "./node_modules/@material-ui/core/esm/Button/index.js"));
 const TextField_1 = __importDefault(__webpack_require__(/*! @material-ui/core/TextField */ "./node_modules/@material-ui/core/esm/TextField/index.js"));
 const Toolbar_1 = __importDefault(__webpack_require__(/*! @material-ui/core/Toolbar */ "./node_modules/@material-ui/core/esm/Toolbar/index.js"));
+const Typography_1 = __importDefault(__webpack_require__(/*! @material-ui/core/Typography */ "./node_modules/@material-ui/core/esm/Typography/index.js"));
+const Refresh_1 = __importDefault(__webpack_require__(/*! @material-ui/icons/Refresh */ "./node_modules/@material-ui/icons/Refresh.js"));
 const withStyles_1 = __importDefault(__webpack_require__(/*! @material-ui/styles/withStyles */ "./node_modules/@material-ui/styles/esm/withStyles/index.js"));
 const React = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 const react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 const actions_1 = __webpack_require__(/*! ../../store/RegisterForm/actions */ "./resources/ts/store/RegisterForm/actions.ts");
 const styler = withStyles_1.default((theme) => ({
+    alignText: {
+        paddingTop: theme.spacing(2),
+        textAlign: "center",
+    },
     grow: {
         flexGrow: 1
     },
@@ -62129,7 +63286,9 @@ exports.mapStateToProps = (state) => ({
 exports.mapDispatchToProps = (dispatch) => ({
     onChangeEmail: (email) => dispatch(actions_1.changeEmail(email)),
     onChangePassword: (password) => dispatch(actions_1.changePassword(password)),
-    onChangePasswordConfirmation: (passwordConfirmation) => dispatch(actions_1.changePasswordConfirmation(passwordConfirmation))
+    onChangePasswordConfirmation: (passwordConfirmation) => dispatch(actions_1.changePasswordConfirmation(passwordConfirmation)),
+    onEmailAgain: (userId) => dispatch(actions_1.emailAgain(userId)),
+    onSubmit: (email, password, passwordConfirmation) => dispatch(actions_1.submit(email, password, passwordConfirmation)),
 });
 class RegisterForm extends React.Component {
     constructor(props) {
@@ -62137,16 +63296,31 @@ class RegisterForm extends React.Component {
         this.handleChangeEmail = this.handleChangeEmail.bind(this);
         this.handleChangePassword = this.handleChangePassword.bind(this);
         this.handleChangePasswordConfirmation = this.handleChangePasswordConfirmation.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleClickEmailAgain = this.handleClickEmailAgain.bind(this);
     }
     render() {
-        const { classes, email, password, passwordConfirmation } = this.props;
-        return (React.createElement("form", null,
+        const { classes, email, password, passwordConfirmation, userId } = this.props;
+        if (userId) {
+            return (React.createElement("div", { className: classes.alignText },
+                React.createElement(Typography_1.default, { variant: "caption", align: "center" }, "You have successfully received an email. If you didint received click below button to send again."),
+                React.createElement("div", { className: classes.alignText },
+                    React.createElement(Button_1.default, { onClick: this.handleClickEmailAgain, variant: "outlined", color: "secondary" },
+                        React.createElement(Refresh_1.default, null),
+                        "Send Again"))));
+        }
+        return (React.createElement("form", { onSubmit: this.handleSubmit },
             React.createElement(TextField_1.default, { className: classes.input, margin: "dense", label: "Email", fullWidth: true, value: email, onChange: this.handleChangeEmail }),
             React.createElement(TextField_1.default, { className: classes.input, margin: "dense", label: "Password", type: "password", fullWidth: true, value: password, onChange: this.handleChangePassword }),
             React.createElement(TextField_1.default, { className: classes.input, margin: "dense", label: "Confirm Your Password", type: "password", fullWidth: true, value: passwordConfirmation, onChange: this.handleChangePasswordConfirmation }),
             React.createElement(Toolbar_1.default, null,
                 React.createElement("div", { className: classes.grow }),
-                React.createElement(Button_1.default, { color: "secondary", variant: "outlined" }, "Register"))));
+                React.createElement(Button_1.default, { type: "submit", color: "secondary", variant: "outlined" }, "Register"))));
+    }
+    handleSubmit(e) {
+        e.preventDefault();
+        const { onSubmit, email, password, passwordConfirmation } = this.props;
+        onSubmit(email, password, passwordConfirmation);
     }
     handleChangeEmail(e) {
         this.props.onChangeEmail(e.target.value);
@@ -62156,6 +63330,13 @@ class RegisterForm extends React.Component {
     }
     handleChangePasswordConfirmation(e) {
         this.props.onChangePasswordConfirmation(e.target.value);
+    }
+    handleClickEmailAgain() {
+        const { userId, onEmailAgain } = this.props;
+        if (!userId) {
+            return null;
+        }
+        onEmailAgain(userId);
     }
 }
 exports.default = react_redux_1.connect(exports.mapStateToProps, exports.mapDispatchToProps)(styler(RegisterForm));
@@ -62184,6 +63365,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const AppBar_1 = __importDefault(__webpack_require__(/*! @material-ui/core/AppBar */ "./node_modules/@material-ui/core/esm/AppBar/index.js"));
+const Button_1 = __importDefault(__webpack_require__(/*! @material-ui/core/Button */ "./node_modules/@material-ui/core/esm/Button/index.js"));
 const Toolbar_1 = __importDefault(__webpack_require__(/*! @material-ui/core/Toolbar */ "./node_modules/@material-ui/core/esm/Toolbar/index.js"));
 const Typography_1 = __importDefault(__webpack_require__(/*! @material-ui/core/Typography */ "./node_modules/@material-ui/core/esm/Typography/index.js"));
 const withStyles_1 = __importDefault(__webpack_require__(/*! @material-ui/styles/withStyles */ "./node_modules/@material-ui/styles/esm/withStyles/index.js"));
@@ -62192,6 +63374,7 @@ const react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/rea
 const react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 const helper_1 = __webpack_require__(/*! ../../helper */ "./resources/ts/helper.ts");
 const actions_1 = __webpack_require__(/*! ../../store/Layout/actions */ "./resources/ts/store/Layout/actions.ts");
+const Snacks_1 = __importDefault(__webpack_require__(/*! ./Snacks */ "./resources/ts/components/Layout/Snacks.tsx"));
 const styler = withStyles_1.default((theme) => ({
     brandName: {
         marginLeft: theme.spacing(2)
@@ -62213,7 +63396,8 @@ const styler = withStyles_1.default((theme) => ({
     }
 }));
 const mapStateToProps = (state) => ({
-    ...state.layout
+    ...state.layout,
+    ...state.authController
 });
 const mapDispatchToProps = (dispatch) => ({
     onLoadCategories: () => dispatch(actions_1.fetchCategories())
@@ -62224,7 +63408,7 @@ class Layout extends React.Component {
         props.onLoadCategories();
     }
     render() {
-        const { children, classes, categories } = this.props;
+        const { children, classes, categories, user } = this.props;
         return (React.createElement("div", null,
             React.createElement(AppBar_1.default, { position: "fixed", className: classes.header, color: "primary" },
                 React.createElement(Toolbar_1.default, { variant: "dense" },
@@ -62234,11 +63418,131 @@ class Layout extends React.Component {
                     categories.map((category, key) => (React.createElement(react_router_dom_1.Link, { className: classes.categoryLink, key: key, to: "/category/" +
                             category.id +
                             "/" +
-                            helper_1.nameToURL(category.title) }, category.title))))),
-            React.createElement("div", { className: classes.content }, children)));
+                            helper_1.nameToURL(category.title) }, category.title))),
+                    user ? null : (React.createElement(react_router_dom_1.Link, { to: "/#loginForm" },
+                        React.createElement(Button_1.default, { variant: "contained", color: "secondary", size: "small" }, "Login"))))),
+            React.createElement("div", { className: classes.content }, children),
+            React.createElement(Snacks_1.default, null)));
     }
 }
 exports.default = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(styler(Layout));
+
+
+/***/ }),
+
+/***/ "./resources/ts/components/Layout/Snacks.tsx":
+/*!***************************************************!*\
+  !*** ./resources/ts/components/Layout/Snacks.tsx ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const Button_1 = __importDefault(__webpack_require__(/*! @material-ui/core/Button */ "./node_modules/@material-ui/core/esm/Button/index.js"));
+const green_1 = __importDefault(__webpack_require__(/*! @material-ui/core/colors/green */ "./node_modules/@material-ui/core/colors/green.js"));
+const red_1 = __importDefault(__webpack_require__(/*! @material-ui/core/colors/red */ "./node_modules/@material-ui/core/colors/red.js"));
+const IconButton_1 = __importDefault(__webpack_require__(/*! @material-ui/core/IconButton */ "./node_modules/@material-ui/core/esm/IconButton/index.js"));
+const Snackbar_1 = __importDefault(__webpack_require__(/*! @material-ui/core/Snackbar */ "./node_modules/@material-ui/core/esm/Snackbar/index.js"));
+const withStyles_1 = __importDefault(__webpack_require__(/*! @material-ui/core/styles/withStyles */ "./node_modules/@material-ui/core/styles/withStyles.js"));
+const Close_1 = __importDefault(__webpack_require__(/*! @material-ui/icons/Close */ "./node_modules/@material-ui/icons/Close.js"));
+const React = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+const actions_1 = __webpack_require__(/*! ../../store/SnackController/actions */ "./resources/ts/store/SnackController/actions.ts");
+const styles = withStyles_1.default(theme => ({
+    close: {
+        padding: theme.spacing(0.5),
+        position: "absolute",
+        right: 0,
+        top: 0
+    },
+    confirm: {},
+    error: {
+        color: red_1.default[500]
+    },
+    info: {
+        color: theme.palette.common.white
+    },
+    snack: {
+        maxWidth: theme.spacing(50)
+    },
+    success: {
+        color: green_1.default[500]
+    },
+    warning: {}
+}));
+const mapStateToProps = (state) => ({
+    ...state.snackController
+});
+const mapDispatchToProps = (dispatch) => ({
+    onCloseSnack: (snack) => dispatch(actions_1.closeSnack(snack))
+});
+class Snacks extends React.Component {
+    render() {
+        return React.createElement("div", null, this.renderSnacks());
+    }
+    renderSnacks() {
+        const { snacks, classes } = this.props;
+        const sortedSnacks = snacks.sort((a, b) => (a.time > b.time ? -1 : 1));
+        return sortedSnacks.slice(0, 3).map((snack, index) => (React.createElement(Snackbar_1.default, { className: classes.snack, style: { bottom: this.getNextPosition(sortedSnacks, index) }, message: React.createElement("span", { className: classes[snack.type] }, snack.message), open: typeof snack.timeout === "undefined" ? snack.open : false, key: index, anchorOrigin: {
+                horizontal: "right",
+                vertical: "bottom"
+            }, autoHideDuration: snack.time, action: [
+                React.createElement(IconButton_1.default, { key: "close", "aria-label": "Close", color: "inherit", className: classes.close, onClick: this.handleClose(snack) },
+                    React.createElement(Close_1.default, null)),
+                this.renderConfirmButton(snack)
+            ] })));
+    }
+    renderConfirmButton(currentSnack) {
+        if (currentSnack.type !== "confirm") {
+            return null;
+        }
+        return (React.createElement(Button_1.default, { key: "confirm", color: "secondary", onClick: this.handleConfrim(currentSnack) }, "Confirm"));
+    }
+    getNextPosition(snacks, index) {
+        let bottom = 32;
+        snacks.slice(0, index).forEach(({ open, message, type }) => {
+            if (open) {
+                bottom += Math.ceil(message.length / 46) * 24;
+                bottom += 42;
+                if (type === "confirm") {
+                    bottom += 48;
+                }
+            }
+        });
+        return bottom;
+    }
+    handleClose(snack) {
+        const { onCloseSnack } = this.props;
+        return (e) => {
+            if (snack.onCancel) {
+                snack.onCancel();
+            }
+            onCloseSnack(snack);
+        };
+    }
+    handleConfrim(snack) {
+        const { onCloseSnack } = this.props;
+        return (e) => {
+            if (snack.onConfirm) {
+                snack.onConfirm();
+            }
+            onCloseSnack(snack);
+        };
+    }
+}
+exports.default = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(styles(Snacks));
 
 
 /***/ }),
@@ -62401,12 +63705,14 @@ const reducers_2 = __importDefault(__webpack_require__(/*! ./store/HomePage/redu
 const reducers_3 = __importDefault(__webpack_require__(/*! ./store/Layout/reducers */ "./resources/ts/store/Layout/reducers.ts"));
 const reducers_4 = __importDefault(__webpack_require__(/*! ./store/LoginForm/reducers */ "./resources/ts/store/LoginForm/reducers.ts"));
 const reducers_5 = __importDefault(__webpack_require__(/*! ./store/RegisterForm/reducers */ "./resources/ts/store/RegisterForm/reducers.ts"));
+const reducers_6 = __importDefault(__webpack_require__(/*! ./store/SnackController/reducers */ "./resources/ts/store/SnackController/reducers.ts"));
 const rootReducer = redux_1.combineReducers({
     authController: reducers_1.default,
     homePage: reducers_2.default,
     layout: reducers_3.default,
     loginForm: reducers_4.default,
     registerForm: reducers_5.default,
+    snackController: reducers_6.default,
 });
 exports.default = rootReducer;
 
@@ -62738,7 +64044,13 @@ exports.LAYOUT_MOBILE_SIDEBAR_TOGGLE = "LAYOUT_MOBILE_SIDEBAR_TOGGLE";
 
 "use strict";
 
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const agent_1 = __importDefault(__webpack_require__(/*! ../../agent */ "./resources/ts/agent.ts"));
+const config_1 = __webpack_require__(/*! ../../config */ "./resources/ts/config.ts");
+const actions_1 = __webpack_require__(/*! ../SnackController/actions */ "./resources/ts/store/SnackController/actions.ts");
 const types_1 = __webpack_require__(/*! ./types */ "./resources/ts/store/LoginForm/types.ts");
 exports.changeEmail = (email) => ({
     email,
@@ -62748,6 +64060,32 @@ exports.changePassword = (password) => ({
     password,
     type: types_1.LOGIN_FORM_PASSWORD_CHANGE
 });
+exports.clearForm = () => ({
+    type: types_1.LOGIN_FORM_CLEAR_FORM
+});
+exports.login = (email, password) => async (dispatch) => {
+    agent_1.default.authController
+        .login(email, password)
+        .then(({ message, success, token }) => {
+        if (success) {
+            dispatch(exports.clearForm());
+            if (message) {
+                dispatch(actions_1.successSnack(message));
+            }
+            if (token) {
+                window.setTimeout(() => {
+                    localStorage.setItem(config_1.USER_TOKEN_KEY, token);
+                }, 3000);
+            }
+            if (config_1.APP_URL) {
+                window.location.href = config_1.APP_URL;
+            }
+        }
+        else if (message) {
+            dispatch(actions_1.errorSnack(message));
+        }
+    });
+};
 
 
 /***/ }),
@@ -62779,6 +64117,12 @@ exports.default = (state = initialState, action) => {
                 ...state,
                 password: action.password
             };
+        case types_1.LOGIN_FORM_CLEAR_FORM:
+            return {
+                ...state,
+                email: "",
+                password: ""
+            };
         default:
             return state;
     }
@@ -62799,6 +64143,7 @@ exports.default = (state = initialState, action) => {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LOGIN_FORM_EMAIL_CHANGE = "LOGIN_FORM_EMAIL_CHANGE";
 exports.LOGIN_FORM_PASSWORD_CHANGE = "LOGIN_FORM_PASSWORD_CHANGE";
+exports.LOGIN_FORM_CLEAR_FORM = "LOGIN_FORM_CLEAR_FORM";
 
 
 /***/ }),
@@ -62812,7 +64157,12 @@ exports.LOGIN_FORM_PASSWORD_CHANGE = "LOGIN_FORM_PASSWORD_CHANGE";
 
 "use strict";
 
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const agent_1 = __importDefault(__webpack_require__(/*! ../../agent */ "./resources/ts/agent.ts"));
+const actions_1 = __webpack_require__(/*! ../SnackController/actions */ "./resources/ts/store/SnackController/actions.ts");
 const types_1 = __webpack_require__(/*! ./types */ "./resources/ts/store/RegisterForm/types.ts");
 exports.changeEmail = (email) => ({
     email,
@@ -62826,6 +64176,37 @@ exports.changePasswordConfirmation = (passwordConfirmation) => ({
     passwordConfirmation,
     type: types_1.REGISTER_FORM_CHANGE_PASSWORD_CONFIRMATION
 });
+exports.submited = (userId) => ({
+    type: types_1.REGISTER_FORM_SUBMITED,
+    userId
+});
+exports.submit = (email, password, passwordConfirmation) => async (dispatch) => {
+    agent_1.default.authController
+        .register(email, password, passwordConfirmation)
+        .then(({ success, message, userId }) => {
+        if (success) {
+            if (message) {
+                dispatch(actions_1.successSnack(message));
+            }
+            if (userId) {
+                dispatch(exports.submited(userId));
+            }
+        }
+        else if (message) {
+            dispatch(actions_1.errorSnack(message));
+        }
+    });
+};
+exports.emailAgain = (userId) => async (dispatch) => {
+    agent_1.default.authController.emailConfirmation(userId).then(({ success, message }) => {
+        if (success && message) {
+            dispatch(actions_1.successSnack(message));
+        }
+        else if (message) {
+            dispatch(actions_1.successSnack(message));
+        }
+    });
+};
 
 
 /***/ }),
@@ -62863,6 +64244,11 @@ exports.default = (state = initialState, action) => {
                 ...state,
                 passwordConfirmation: action.passwordConfirmation
             };
+        case types_1.REGISTER_FORM_SUBMITED:
+            return {
+                ...state,
+                userId: action.userId
+            };
         default:
             return state;
     }
@@ -62884,6 +64270,148 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.REGISTER_FORM_CHANGE_EMAIL = "REGISTER_FORM_CHANGE_EMAIL";
 exports.REGISTER_F0RM_CHANGE_PASSWORD = "REGISTER_F0RM_CHANGE_PASSWORD";
 exports.REGISTER_FORM_CHANGE_PASSWORD_CONFIRMATION = "REGISTER_FORM_CHANGE_PASSWORD_CONFIRMATION";
+exports.REGISTER_FORM_SUBMITED = "REGISTER_FORM_SUBMITED";
+
+
+/***/ }),
+
+/***/ "./resources/ts/store/SnackController/actions.ts":
+/*!*******************************************************!*\
+  !*** ./resources/ts/store/SnackController/actions.ts ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const types_1 = __webpack_require__(/*! ./types */ "./resources/ts/store/SnackController/types.ts");
+exports.errorSnack = (message, timeout = undefined) => ({
+    message,
+    timeout,
+    type: types_1.APP_ERROR_SNACK
+});
+exports.successSnack = (message, timeout = undefined) => ({
+    message,
+    timeout,
+    type: types_1.APP_SUCCESS_SNACK
+});
+exports.warningSnack = (message, timeout = undefined) => ({
+    message,
+    timeout,
+    type: types_1.APP_WARNING_SNACK
+});
+exports.infoSnack = (message, timeout = undefined) => ({
+    message,
+    timeout,
+    type: types_1.APP_INFO_SNACK
+});
+exports.confirmSnack = (message, onCancel, onConfirm, timeout = undefined) => ({
+    message,
+    onCancel,
+    onConfirm,
+    timeout,
+    type: types_1.APP_CONFIRM_SNACK
+});
+exports.closeSnack = (snack) => ({
+    snack,
+    type: types_1.APP_CLOSE_SNACK
+});
+
+
+/***/ }),
+
+/***/ "./resources/ts/store/SnackController/reducers.ts":
+/*!********************************************************!*\
+  !*** ./resources/ts/store/SnackController/reducers.ts ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const types_1 = __webpack_require__(/*! ./types */ "./resources/ts/store/SnackController/types.ts");
+const initialState = {
+    nextSnackIndex: 0,
+    snacks: []
+};
+const generateSnackState = (state, action, type) => ({
+    ...state,
+    nextSnackIndex: state.nextSnackIndex + 1,
+    snacks: [
+        ...state.snacks,
+        {
+            index: state.nextSnackIndex,
+            message: action.message,
+            open: true,
+            time: new Date().getTime(),
+            timeout: action.timeout,
+            type
+        }
+    ]
+});
+exports.default = (state = initialState, action) => {
+    switch (action.type) {
+        case types_1.APP_SUCCESS_SNACK:
+            return generateSnackState(state, action, "success");
+        case types_1.APP_ERROR_SNACK:
+            return generateSnackState(state, action, "error");
+        case types_1.APP_WARNING_SNACK:
+            return generateSnackState(state, action, "warning");
+        case types_1.APP_INFO_SNACK:
+            return generateSnackState(state, action, "info");
+        case types_1.APP_CONFIRM_SNACK:
+            return {
+                ...state,
+                nextSnackIndex: state.nextSnackIndex + 1,
+                snacks: [
+                    ...state.snacks,
+                    {
+                        index: state.nextSnackIndex,
+                        message: action.message,
+                        onCancel: action.onCancel,
+                        onConfirm: action.onConfirm,
+                        open: true,
+                        time: new Date().getTime(),
+                        timeout: action.timeout,
+                        type: "confirm"
+                    }
+                ]
+            };
+        case types_1.APP_CLOSE_SNACK:
+            return {
+                ...state,
+                snacks: state.snacks.map(snack => ({
+                    ...snack,
+                    open: snack.index === action.snack.index ? false : snack.open
+                }))
+            };
+        default:
+            return state;
+    }
+};
+
+
+/***/ }),
+
+/***/ "./resources/ts/store/SnackController/types.ts":
+/*!*****************************************************!*\
+  !*** ./resources/ts/store/SnackController/types.ts ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+// Snack types
+exports.APP_WARNING_SNACK = "APP_WARNING_SNACK";
+exports.APP_SUCCESS_SNACK = "APP_SUCCESS_SNACK";
+exports.APP_ERROR_SNACK = "APP_ERROR_SNACK";
+exports.APP_CONFIRM_SNACK = "APP_CONFIRM_SNACK";
+exports.APP_INFO_SNACK = "APP_INFO_SNACK";
+exports.APP_CLOSE_SNACK = "APP_CLOSE_SNACK";
 
 
 /***/ }),

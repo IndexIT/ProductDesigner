@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
 import { validate } from "../../helper";
 import { AppState } from "../../rootReducer";
-import { changeEmail, changePassword } from "../../store/LoginForm/actions";
+import { changeEmail, changePassword, login } from "../../store/LoginForm/actions";
 import { ILoginFormState } from "../../store/LoginForm/types";
 
 const styler = withStyles((theme: Theme) => ({
@@ -33,6 +33,7 @@ interface IProps extends ILoginFormState {
     };
     onChangeEmail: (email: string) => void;
     onChangePassword: (password: string) => void;
+    onSubmit:(email:string,password:string) =>void;
 }
 
 export const mapStateToProps = (state: AppState) => ({
@@ -41,7 +42,8 @@ export const mapStateToProps = (state: AppState) => ({
 
 export const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
     onChangeEmail: (email: string) => dispatch(changeEmail(email)),
-    onChangePassword: (password: string) => dispatch(changePassword(password))
+    onChangePassword: (password: string) => dispatch(changePassword(password)),
+    onSubmit: (email:string, password:string)=>dispatch(login(email,password))
 });
 
 class LoginForm extends React.Component<IProps> {
@@ -51,16 +53,17 @@ class LoginForm extends React.Component<IProps> {
 
         this.handleChangeEmail = this.handleChangeEmail.bind(this);
         this.handleChangePassword = this.handleChangePassword.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     public render() {
         const { classes,email,password } = this.props;
 
-        const emailError = validate(email,"required","email");
-        const passwordError = validate(password,"required","password","min:6");
+        const emailError = validate(email,"email");
+        const passwordError = validate(password,"password","min:6");
 
         return (
-            <form>
+            <form id="loginForm" onSubmit={this.handleSubmit} >
                 <TextField
                     className={classes.input}
                     margin="dense"
@@ -84,7 +87,7 @@ class LoginForm extends React.Component<IProps> {
                 />
                 <Toolbar>
                     <div className={classes.grow} />
-                    <Button color="secondary" variant="outlined">
+                    <Button type="submit" color="secondary" variant="outlined">
                         Login
                     </Button>
                 </Toolbar>
@@ -104,16 +107,24 @@ class LoginForm extends React.Component<IProps> {
         );
     }
 
-    protected handleChangePassword(e:React.ChangeEvent<HTMLInputElement>){
+    protected handleChangeEmail(e:React.ChangeEvent<HTMLInputElement>){
         const {onChangeEmail} = this.props;
 
         onChangeEmail(e.target.value);
     }
 
-    protected handleChangeEmail(e:React.ChangeEvent<HTMLInputElement>){
+    protected handleChangePassword(e:React.ChangeEvent<HTMLInputElement>){
         const {onChangePassword} = this.props;
 
         onChangePassword(e.target.value);
+    }
+
+    protected handleSubmit(e:React.FormEvent){
+        e.preventDefault();
+
+        const {onSubmit,email,password} = this.props;
+
+        onSubmit(email,password);
     }
 }
 

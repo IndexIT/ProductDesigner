@@ -1,12 +1,20 @@
+import { IResponse } from "../../mainTypes";
+
 export const REGISTER_FORM_CHANGE_EMAIL = "REGISTER_FORM_CHANGE_EMAIL";
 export const REGISTER_F0RM_CHANGE_PASSWORD = "REGISTER_F0RM_CHANGE_PASSWORD";
 export const REGISTER_FORM_CHANGE_PASSWORD_CONFIRMATION =
     "REGISTER_FORM_CHANGE_PASSWORD_CONFIRMATION";
+export const REGISTER_FORM_SUBMITED = "REGISTER_FORM_SUBMITED";
 
 export interface IRegisterFormState {
     email: string;
     password: string;
     passwordConfirmation: string;
+    userId?:number;
+}
+
+export interface IRegisterResponse extends IResponse {
+    userId?: number;
 }
 
 export interface IChangeEmail {
@@ -24,7 +32,13 @@ export interface IChangePasswordConfirmation {
     passwordConfirmation: string;
 }
 
+export interface ISubmitedForm {
+    type: typeof REGISTER_FORM_SUBMITED;
+    userId: number;
+}
+
 export type RegisterFormActions =
     | IChangeEmail
     | IChangePassword
-    | IChangePasswordConfirmation;
+    | IChangePasswordConfirmation
+    | ISubmitedForm;

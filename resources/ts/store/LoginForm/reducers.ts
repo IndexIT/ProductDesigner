@@ -1,8 +1,9 @@
 import {
     ILoginFormState,
+    LOGIN_FORM_CLEAR_FORM,
     LOGIN_FORM_EMAIL_CHANGE,
     LOGIN_FORM_PASSWORD_CHANGE,
-    LoginFormActions
+    LoginFormActions,
 } from "./types";
 
 const initialState: ILoginFormState = {
@@ -21,6 +22,12 @@ export default (state = initialState, action: LoginFormActions) => {
             return {
                 ...state,
                 password: action.password
+            };
+        case LOGIN_FORM_CLEAR_FORM:
+            return {
+                ...state,
+                email:"",
+                password:""
             };
         default:
             return state;

@@ -3,7 +3,8 @@ import {
     REGISTER_F0RM_CHANGE_PASSWORD,
     REGISTER_FORM_CHANGE_EMAIL,
     REGISTER_FORM_CHANGE_PASSWORD_CONFIRMATION,
-    RegisterFormActions
+    REGISTER_FORM_SUBMITED,
+    RegisterFormActions,
 } from "./types";
 
 const initialState: IRegisterFormState = {
@@ -31,6 +32,11 @@ export default (
             return {
                 ...state,
                 passwordConfirmation: action.passwordConfirmation
+            };
+        case REGISTER_FORM_SUBMITED:
+            return {
+                ...state,
+                userId: action.userId
             };
         default:
             return state;

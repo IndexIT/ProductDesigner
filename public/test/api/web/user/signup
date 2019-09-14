@@ -1,0 +1,5 @@
+{
+    "success":true,
+    "message":"You have successfully registered. You will received a email to confirm.",
+    "userId": 10
+}

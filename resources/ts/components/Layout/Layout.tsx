@@ -1,4 +1,5 @@
 import AppBar from "@material-ui/core/AppBar";
+import Button from "@material-ui/core/Button";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -10,8 +11,10 @@ import { ThunkDispatch } from "redux-thunk";
 
 import { nameToURL } from "../../helper";
 import { AppState } from "../../rootReducer";
+import { IAuthControllerState } from "../../store/AuthController/types";
 import { fetchCategories } from "../../store/Layout/actions";
 import { ILayoutState } from "../../store/Layout/types";
+import Snacks from "./Snacks";
 
 const styler = withStyles((theme: Theme) => ({
     brandName: {
@@ -23,7 +26,7 @@ const styler = withStyles((theme: Theme) => ({
         paddingRight: theme.spacing(2),
         textDecoration: "none!important"
     },
-    content:{
+    content: {
         paddingTop: theme.spacing(5)
     },
     grow: {
@@ -34,7 +37,7 @@ const styler = withStyles((theme: Theme) => ({
     }
 }));
 
-interface IProps extends ILayoutState {
+interface IProps {
     children: JSX.Element[] | JSX.Element | string;
     classes: {
         brandName: string;
@@ -47,26 +50,33 @@ interface IProps extends ILayoutState {
 }
 
 const mapStateToProps = (state: AppState) => ({
-    ...state.layout
+    ...state.layout,
+    ...state.authController
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
     onLoadCategories: () => dispatch(fetchCategories())
 });
 
-class Layout extends React.Component<IProps> {
-    constructor(props: IProps) {
+class Layout extends React.Component<
+    IProps & ILayoutState & IAuthControllerState
+> {
+    constructor(props: IProps & ILayoutState & IAuthControllerState) {
         super(props);
 
         props.onLoadCategories();
     }
 
     public render() {
-        const { children, classes, categories } = this.props;
+        const { children, classes, categories, user } = this.props;
 
         return (
             <div>
-                <AppBar position="fixed" className={classes.header} color="primary">
+                <AppBar
+                    position="fixed"
+                    className={classes.header}
+                    color="primary"
+                >
                     <Toolbar variant="dense">
                         <img src="/images/logo.png" width="38" />
                         <Typography className={classes.brandName} variant="h5">
@@ -87,11 +97,21 @@ class Layout extends React.Component<IProps> {
                                 {category.title}
                             </Link>
                         ))}
+                        {user ? null : (
+                            <Link to="/#loginForm">
+                                <Button
+                                    variant="contained"
+                                    color="secondary"
+                                    size="small"
+                                >
+                                    Login
+                                </Button>
+                            </Link>
+                        )}
                     </Toolbar>
                 </AppBar>
-                <div className={classes.content} >
-                    {children}
-                </div>
+                <div className={classes.content}>{children}</div>
+                <Snacks />
             </div>
         );
     }
