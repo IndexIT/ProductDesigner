@@ -1,0 +1,106 @@
+# PHP CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-php/ for more details
+#
+version: 2
+jobs:
+  build:
+    working_directory: ~/printometic/
+    docker:
+      # Specify the version you desire here
+      - image: circleci/php:7.2-node-browsers
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # Using the RAM variation mitigates I/O contention
+      # for database intensive operations.
+      # - image: circleci/mysql:5.7-ram
+      #
+      # - image: redis:2.8.19
+    branches:
+      only:
+        - master
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "9e:98:74:ff:99:18:96:7b:fa:42:c0:07:90:9f:1a:4c"
+
+      - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
+      - run: sudo apt-get install rsync
+
+      # Download and cache dependencies
+      - run: sudo composer self-update
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "composer.lock" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run: composer install -n --prefer-dist
+      - save_cache:
+          key: v1-dependencies-{{ checksum "composer.lock" }}
+          paths:
+            - /vendor
+
+      - restore_cache:
+          keys:
+            - node-v1-{{ checksum "package-lock.json" }}
+            - node-v1-
+      - run: npm install
+      - save_cache:
+          key: node-v1-{{ checksum "package-lock.json" }}
+          paths:
+            - /node_modules
+
+      - run:
+          name: 'Adding Host key to know_hosts file'
+          command: ssh-keyscan -p ${SSH_PORT} -t rsa ${SSH_HOST} >> ~/.ssh/known_hosts
+
+
+      # prepare public files
+      - run: npm run prod
+
+      - run:
+          name: 'Creating .env file'
+          command: |
+            cp .env.example .env
+            sed -i "/^APP_NAME/c\APP_NAME=\"$APP_NAME\"" .env
+            sed -i "/^APP_ENV/c\APP_ENV=$APP_ENV" .env
+            sed -i "/^APP_KEY/c\APP_KEY=$APP_KEY" .env
+            sed -i "/^APP_DEBUG/c\APP_DEBUG=$APP_DEBUG" .env
+            sed -i "/^APP_URL/c\APP_URL=$APP_URL" .env
+            sed -i "/^DB_CONNECTION/c\DB_CONNECTION=$DB_CONNECTION" .env
+            sed -i "/^DB_HOST/c\DB_HOST=$DB_HOST" .env
+            sed -i "/^DB_PORT/c\DB_PORT=$DB_PORT" .env
+            sed -i "/^DB_DATABASE/c\DB_DATABASE=$DB_DATABASE" .env
+            sed -i "/^DB_USERNAME/c\DB_USERNAME=$DB_USERNAME" .env
+            sed -i "/^DB_PASSWORD/c\DB_PASSWORD=$DB_PASSWORD" .env
+            # sed -i "/^MAIL_DRIVER/c\MAIL_DRIVER=$MAIL_DRIVER" .env
+            # sed -i "/^MAIL_HOST/c\MAIL_HOST=$MAIL_HOST" .env
+            # sed -i "/^MAIL_PORT/c\MAIL_PORT=$MAIL_PORT" .env
+            # sed -i "/^MAIL_USERNAME/c\MAIL_USERNAME=$MAIL_USERNAME" .env
+            # sed -i "/^MAIL_PASSWORD/c\MAIL_PASSWORD=$MAIL_PASSWORD" .env
+            # sed -i "/^MAIL_ENCRYPTION/c\MAIL_ENCRYPTION=$MAIL_ENCRYPTION" .env
+            sed -i "/^MIX_APP_DEBUG/c\MIX_APP_DEBUG=$MIX_APP_DEBUG" .env
+            sed -i "/^MIX_APP_URL/c\MIX_APP_URL=$MIX_APP_URL" .env
+      # Create rsync exclude list
+      - run:
+          name: 'Create rsync exclude list'
+          command: |
+            echo -e '.circleci' > exclude-list.txt
+            echo -e '.git' >> exclude-list.txt
+            echo -e 'node_modules' >> exclude-list.txt
+            echo -e 'storage' >> exclude-list.txt
+            echo -e '.editorconfig' >> exclude-list.txt
+            echo -e '.env.example' >> exclude-list.txt
+            echo -e '.gitattributes' >> exclude-list.txt
+            echo -e '.gitignore' >> exclude-list.txt
+            echo -e '.styleci.yml' >> exclude-list.txt
+            echo -e 'exclude-list.txt' >> exclude-list.txt
+      # Deploy
+      - deploy:
+          command: |
+            rsync -azvW -e "ssh -p $SSH_PORT  -o PubkeyAuthentication=no  -o StrictHostKeyChecking=no  " --delete --exclude-from 'exclude-list.txt' ~/printometic/ ${SSH_USER}@${SSH_HOST}:~/printometic/
+            ssh -v -p ${SSH_PORT} ${SSH_USER}@${SSH_HOST}  -o PubkeyAuthentication=no   -o StrictHostKeyChecking=no 'cd ~/printometic/; composer install --optimize-autoloader --no-dev; php artisan migrate --force ;  ln -s ~/printometic/public ~/public_html ; php artisan config:cache; php artisan key:genrate ; php artisan storage:link ; php artisan passport:install ;  php artisan clear-compiled ; rm -f ~/printometic/bootstrap/cache/routes.php'

@@ -6,6 +6,15 @@
 
         <title>{{config('app.name')}}</title>
 
+        <style type="text/css">
+            body{
+                margin:0;
+            }
+
+            a:link, a:active, a:visited {
+                text-decoration: none!important;
+            }
+        </style>
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">

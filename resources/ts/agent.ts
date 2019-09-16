@@ -2,6 +2,9 @@ import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { APP_URL } from "./config";
 import { IResponse } from "./mainTypes";
 import { ILoginResponse, IUserResponse } from "./store/AuthController/types";
+import { IHomeCategoriesResponse } from "./store/HomePage/types";
+import { ICategoriesResponse } from "./store/Layout/types";
+import { IRegisterResponse } from "./store/RegisterForm/types";
 
 const request = (
     url: string,
@@ -9,7 +12,7 @@ const request = (
     config: undefined | AxiosRequestConfig = undefined
 ) =>
     axios
-        .post(APP_URL + "api/web/" + url, parameters, config)
+        .post(APP_URL + "test/api/web/" + url, parameters, config)
         .then(
             (response: AxiosResponse): IResponse => ({
                 success: true,
@@ -27,11 +30,30 @@ const request = (
         );
 
 const authController = {
+    emailConfirmation: (userId:number) :Promise<IResponse> =>
+        request("user/emailConfirmation",{userId}),
     login: (email: string, password: string): Promise<ILoginResponse> =>
         request("user/login", { email, password }),
-    userInfo: (): Promise<IUserResponse> => request("user/info")
+    register: (
+        email: string,
+        password: string,
+        passwordConfirm: string
+    ): Promise<IRegisterResponse> =>
+        request("user/signup", { email, password, passwordConfirm }),
+    userInfo: (): Promise<IUserResponse> => request("user/info"),
+};
+
+const layout = {
+    categories: (): Promise<ICategoriesResponse> => request("categories/header")
+};
+
+const homePage = {
+    categories: (): Promise<IHomeCategoriesResponse> =>
+        request("categories/home")
 };
 
 export default {
-    authController
+    authController,
+    homePage,
+    layout
 };

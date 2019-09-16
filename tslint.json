@@ -12,7 +12,8 @@
         "no-unused-variable":true,
         "semicolon":[true,"always"],
         "no-submodule-imports":false,
-        "no-implicit-dependencies": false
+        "no-implicit-dependencies": false,
+        "no-console": false
     },
     "rulesDirectory": []
 }

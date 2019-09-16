@@ -1,0 +1,140 @@
+{
+    "success":true,
+    "recommended":[
+        {
+            "id":1,
+            "name":"I will cut you unicorn",
+            "vendorName":null,
+            "image":"product1"
+        },
+        {
+            "id":2,
+            "name":"Test Product 2",
+            "vendorName":"Johnson",
+            "image":"product2"
+        },
+        {
+            "id":5,
+            "name":"Test Product 7",
+            "vendorName":"Linus Torvalds",
+            "image":"product3"
+        },
+        {
+            "id":7,
+            "name":"Test Product 12",
+            "vendorName":null,
+            "image":"product4"
+        }
+    ],
+    "staff_picks":[
+        {
+            "id":1,
+            "name":"I will cut you unicorn",
+            "vendorName":null,
+            "image":"product5"
+        },
+        {
+            "id":2,
+            "name":"Test Product 2",
+            "vendorName":"Johnson",
+            "image":"product6"
+        },
+        {
+            "id":5,
+            "name":"Test Product 7",
+            "vendorName":"Linus Torvalds",
+            "image":"product7"
+        },
+        {
+            "id":7,
+            "name":"Test Product 12",
+            "vendorName":null,
+            "image":"product8"
+        }
+    ],
+    "featured_collections":[
+        {
+            "id":1,
+            "name":"Collection 1",
+            "image":"collect1"
+        },
+        {
+            "id":2,
+            "name":"Collection 2",
+            "image":"collect2"
+        },
+        {
+            "id":3,
+            "name":"Collection 3",
+            "image":"collect3"
+        },
+        {
+            "id":4,
+            "name":"Collection 4",
+            "image":"collect4"
+        }
+    ],
+    "trending_collections":[
+        {
+            "id":1,
+            "name":"Leggings",
+            "vendorName":"Mr Jonathan",
+            "products":[
+                {
+                    "id":1,
+                    "name":"I will cut you unicorn",
+                    "vendorName":null,
+                    "image":"product1"
+                },
+                {
+                    "id":2,
+                    "name":"Test Product 2",
+                    "vendorName":"Johnson",
+                    "image":"product2"
+                },
+                {
+                    "id":5,
+                    "name":"Test Product 7",
+                    "vendorName":"Linus Torvalds",
+                    "image":"product3"
+                },
+                {
+                    "id":7,
+                    "name":"Test Product 12",
+                    "vendorName":null,
+                    "image":"product4"
+                }
+            ]
+        },
+        {
+            "id":2,
+            "name":"Denims",
+            "products":[
+                {
+                    "id":1,
+                    "name":"I will cut you unicorn",
+                    "vendorName":null,
+                    "image":"product5"
+                },
+                {
+                    "id":2,
+                    "name":"Test Product 2",
+                    "vendorName":"Johnson",
+                    "image":"product6"
+                },
+                {
+                    "id":5,
+                    "name":"Test Product 7",
+                    "vendorName":"Linus Torvalds",
+                    "image":"product7"
+                },
+                {
+                    "id":7,
+                    "name":"Test Product 12",
+                    "vendorName":null,
+                    "image":"product8"
+                }
+            ]
+        }
+    ]
+}
