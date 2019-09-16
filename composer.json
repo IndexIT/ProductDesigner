@@ -61,7 +61,7 @@
         ],
         "compile":[
             "php artisan passport:keys",
-            "php artisan migrate",
+            "php artisan migrate --force",
             "php artisan storage:link"
         ]
     }
