@@ -30,7 +30,7 @@ class ProductRow extends React.Component<IProps> {
             <div className={classes.wrapper}>
                 <Typography variant="h5">{label}</Typography>
                 <Divider />
-                <Grid container={true}>
+                <Grid alignContent="center" alignItems="center" justify="center" container={true}>
                     {products.map((product, key) => (
                         <Grid item={true} key={key} md={3}>
                             <ProductCard type={type} {...product} />

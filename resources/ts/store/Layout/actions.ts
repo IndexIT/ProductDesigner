@@ -2,11 +2,13 @@ import { AnyAction } from "redux";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import agent from "../../agent";
 import {
+    IChangeCategoryMenu,
     IHeaderCategory,
     ILoadedCategories,
     IToggleMobileSidebarAction,
     LAYOUT_CATEGORIES_LOADED,
-    LAYOUT_MOBILE_SIDEBAR_TOGGLE
+    LAYOUT_CHANGE_CATEGORY_MENU,
+    LAYOUT_MOBILE_SIDEBAR_TOGGLE,
 } from "./types";
 
 export const loadedCategories = (
@@ -18,6 +20,11 @@ export const loadedCategories = (
 
 export const toggleSidebar = (): IToggleMobileSidebarAction => ({
     type: LAYOUT_MOBILE_SIDEBAR_TOGGLE
+});
+
+export const changeCategoryMenu = (categoryMenu:number):IChangeCategoryMenu=>({
+    activeCategoryMenu:categoryMenu,
+    type: LAYOUT_CHANGE_CATEGORY_MENU,
 });
 
 export const fetchCategories = (): ThunkAction<
