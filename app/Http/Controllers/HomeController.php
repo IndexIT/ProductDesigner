@@ -11,8 +11,8 @@ class HomeController extends Controller
 {
     public function homeCategories(Request $request)
     {
-        $recommended = Category::limit(4)->get();
-        $staff_picks = Category::where('name', 'staff_picks')->get();
+        $recommended = Category::limit(4)->with('subCategories')->get();
+        $staff_picks = Category::where('name', 'staff_picks')->with('subCategories')->get();
         $featured_collections = Collection::limit(3)->get();
         $trending_collections = Collection::limit(2)->with('products')->get();
 
