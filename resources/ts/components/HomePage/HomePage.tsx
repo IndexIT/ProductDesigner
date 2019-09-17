@@ -1,4 +1,5 @@
 import Button from "@material-ui/core/Button";
+import red from "@material-ui/core/colors/red";
 import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
@@ -6,6 +7,8 @@ import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import FavouriteIcon from "@material-ui/icons/Favorite";
+import SearchIcon from "@material-ui/icons/Search";
 import withStyles from "@material-ui/styles/withStyles";
 import * as React from "react";
 import { connect } from "react-redux";
@@ -14,27 +17,51 @@ import { AppState } from "../../rootReducer";
 import { IAuthControllerState } from "../../store/AuthController/types";
 import { changeForm, fetchCategories } from "../../store/HomePage/actions";
 import { HomePageForms, IHomePageState } from "../../store/HomePage/types";
+import IconTextField from "../Common/IconTextField";
 import Layout from "../Layout/Layout";
 import LoginForm from "./LoginForm";
 import ProductRow from "./ProductRow";
 import RegisterForm from "./RegisterForm";
 
 const styler = withStyles((theme: Theme) => ({
-    breadcrumb: {
-        background: "#7979ff",
-        color: theme.palette.text.primary,
-        padding: theme.spacing(1)
+    blackIcon:{
+        color: theme.palette.text.primary
     },
-    breadcrumbGrid: {
+    breadcrumb: {
+        background: "url(/images/wallpaper.jpg)",
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+        color: theme.palette.text.primary
+    },
+    breadcrumbLeftGrid: {
         padding: theme.spacing(2)
+    },
+    breadcrumbRightGrid: {
+        background: "rgba(25,25,25,0.9)",
+        minHeight: 380,
+        padding: theme.spacing(2),
+        transitionDuration:".1s"
+    },
+    breadcrumbTitle:{
+        color:theme.palette.common.white,
+        fontWeight:900,
+        marginTop: theme.spacing(10),
+        paddingLeft: theme.spacing(2) ,
+        textShadow: "2px 2px 4px rgba(0,0,0,0.7)",
     },
     grow: {
         flexGrow: 1
     },
-    screenshot: {
-        display: "block",
-        margin: "auto",
-        marginTop: theme.spacing(2)
+    iconTextField:{
+        margin:"auto",
+        marginTop: theme.spacing(4)
+    },
+    loginFormWrapper:{
+        color:theme.palette.common.white,
+        maxWidth:440,
+    },
+    redIcon:{
+        color: red[400]
     },
     thirdBreadcrumb: {
         background: "#e45b5b",
@@ -46,11 +73,16 @@ const styler = withStyles((theme: Theme) => ({
 
 interface IProps {
     classes: {
+        blackIcon: string;
         breadcrumb: string;
-        screenshot: string;
-        breadcrumbGrid: string;
+        breadcrumbLeftGrid: string;
+        breadcrumbRightGrid: string;
+        breadcrumbTitle: string;
         grow: string;
+        iconTextField: string;
+        loginFormWrapper: string;
         thirdBreadcrumb: string;
+        redIcon: string;
     };
     onChangeForm: (e: React.ChangeEvent<{}>, form: HomePageForms) => void;
     onDataLoad: () => void;
@@ -105,49 +137,51 @@ class HomePage extends React.Component<
                     <div className={classes.breadcrumb}>
                         <Grid container={true}>
                             <Grid
-                                className={classes.breadcrumbGrid}
+                                className={classes.breadcrumbLeftGrid}
                                 item={true}
                                 md={6}
                             >
-                                <Typography align="center" variant="h6">
+                                <Typography className={classes.breadcrumbTitle} align="left" variant="h3">
                                     Title 1
                                 </Typography>
-                                <Divider />
-                                <Typography align="justify" variant="caption">
-                                    Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit. Maecenas mollis velit a
-                                    odio aliquam, eu aliquet nisl consequat.
-                                    Nunc sed felis nunc. Curabitur quis nisl at
-                                    dolor suscipit aliquam. Sed in lacinia ante.
-                                </Typography>
-                                <img
-                                    className={classes.screenshot}
-                                    width="60%"
-                                    src="/images/screenshots/1.png"
+                                <IconTextField
+                                    label="What is your favourite animal?"
+                                    leftIcon={
+                                        <FavouriteIcon className={classes.redIcon} />
+                                    }
+                                    rightIcon={
+                                        <SearchIcon className={classes.blackIcon} />
+                                    }
+                                    className={classes.iconTextField}
                                 />
                             </Grid>
                             <Grid
-                                className={classes.breadcrumbGrid}
+                                className={classes.breadcrumbRightGrid}
                                 item={true}
-                                md={5}
+                                md={6}
                             >
-                                {user ? null : (
-                                    <Tabs onChange={onChangeForm} value={form}>
-                                        <Tab
-                                            label="Login"
-                                            value="login"
-                                            title="Click here to register your credentials."
-                                            color="textSecondary"
-                                        />
-                                        <Tab
-                                            label="Signup"
-                                            value="signup"
-                                            title="Click here to register as a new user."
-                                            color="textSecondary"
-                                        />
-                                    </Tabs>
-                                )}
-                                {this.renderForm()}
+                                <div className={classes.loginFormWrapper} >
+                                    {user ? null : (
+                                        <Tabs
+                                            onChange={onChangeForm}
+                                            value={form}
+                                        >
+                                            <Tab
+                                                label="Login"
+                                                value="login"
+                                                title="Click here to register your credentials."
+                                                color="inherit"
+                                            />
+                                            <Tab
+                                                label="Signup"
+                                                value="signup"
+                                                title="Click here to register as a new user."
+                                                color="inherit"
+                                            />
+                                        </Tabs>
+                                    )}
+                                    {this.renderForm()}
+                                </div>
                             </Grid>
                         </Grid>
                     </div>

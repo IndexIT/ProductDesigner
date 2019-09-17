@@ -18,7 +18,6 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { ThunkDispatch } from "redux-thunk";
 
-import { nameToURL } from "../../helper";
 import { AppState } from "../../rootReducer";
 import { IAuthControllerState } from "../../store/AuthController/types";
 import {
@@ -33,13 +32,18 @@ const styler = withStyles((theme: Theme) => ({
         marginLeft: theme.spacing(2)
     },
     categoryBlock: {
-        margin: theme.spacing(2)
+        margin: theme.spacing(2),
+        marginBottom:0,
+        marginTop:0,
     },
     categoryLink: {
         color: theme.palette.text.primary + "!important",
         fontSize: ".7em",
         paddingRight: theme.spacing(2),
         textDecoration: "none!important"
+    },
+    categoryTab:{
+        fontSize:".6em"
     },
     content: {
         paddingTop: theme.spacing(7)
@@ -61,6 +65,7 @@ interface IProps {
     classes: {
         brandName: string;
         categoryBlock: string;
+        categoryTab: string;
         grow: string;
         header: string;
         categoryLink: string;
@@ -146,10 +151,12 @@ class Layout extends React.Component<
                                         key={key}
                                         value={key}
                                         label={category.title}
+                                        className={classes.categoryTab}
                                     />
                                 ))}
                                 <Tab
                                     textColor="primary"
+                                    className={classes.categoryTab}
                                     value={-1}
                                     label={
                                         activeCategoryMenu !== -1

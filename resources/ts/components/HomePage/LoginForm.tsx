@@ -21,15 +21,24 @@ const styler = withStyles((theme: Theme) => ({
         flexGrow: 1
     },
     input: {
+        color: theme.palette.common.white
+    },
+    textField: {
         marginTop: theme.spacing(2)
+    },
+    whiteButton:{
+        borderColor: theme.palette.common.white,
+        color: theme.palette.common.white
     }
 }));
 
 interface IProps extends ILoginFormState {
     classes: {
         centerAlign: string;
-        grow: string;
         input: string;
+        grow: string;
+        textField: string;
+        whiteButton: string;
     };
     onChangeEmail: (email: string) => void;
     onChangePassword: (password: string) => void;
@@ -65,25 +74,33 @@ class LoginForm extends React.Component<IProps> {
         return (
             <form id="loginForm" onSubmit={this.handleSubmit} >
                 <TextField
-                    className={classes.input}
+                    className={classes.textField}
                     margin="dense"
                     label="Email"
                     fullWidth={true}
+                    inputProps={{
+                        className:classes.input
+                    }}
                     value={email}
                     onChange={this.handleChangeEmail}
                     error={!!emailError}
                     helperText={emailError}
+                    color="inherit"
                 />
                 <TextField
-                    className={classes.input}
+                    className={classes.textField}
                     margin="dense"
                     label="Password"
                     type="password"
                     fullWidth={true}
                     value={password}
+                    inputProps={{
+                        className:classes.input
+                    }}
                     onChange={this.handleChangePassword}
                     error={!!passwordError}
                     helperText={passwordError}
+                    color="inherit"
                 />
                 <Toolbar>
                     <div className={classes.grow} />
@@ -98,7 +115,7 @@ class LoginForm extends React.Component<IProps> {
                         Browse our products without Login
                     </Typography>
                     <div>
-                        <Button size="small" variant="outlined">
+                        <Button className={classes.whiteButton} size="small" variant="outlined">
                             Browse
                         </Button>
                     </div>
