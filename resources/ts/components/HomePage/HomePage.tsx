@@ -36,17 +36,17 @@ import RegisterForm from "./RegisterForm";
 
 const styler = withStyles((theme: Theme) => ({
     animalList: {
-        left:0,
-        marginLeft:"auto",
+        left: 0,
+        marginLeft: "auto",
         marginRight: "auto",
-        maxWidth:400,
+        maxWidth: 400,
         position: "absolute",
-        right:0,
+        right: 0,
         top: theme.spacing(7),
-        width: "100%",
+        width: "100%"
     },
     animalPicker: {
-        position: "relative",
+        position: "relative"
     },
     blackIcon: {
         color: theme.palette.text.primary
@@ -112,7 +112,7 @@ interface IProps {
     };
     onChangeForm: (e: React.ChangeEvent<{}>, form: HomePageForms) => void;
     onDataLoad: () => void;
-    onHideAnimalList:()=> void;
+    onHideAnimalList: () => void;
     onSearchAnimals: (keyword: string | number | undefined) => void;
 }
 
@@ -124,7 +124,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
     onChangeForm: (e: React.ChangeEvent<{}>, form: HomePageForms) =>
         dispatch(changeForm(form)),
     onDataLoad: () => dispatch(fetchCategories()),
-    onHideAnimalList:()=>dispatch(hideAnimals()),
+    onHideAnimalList: () => dispatch(hideAnimals()),
     onSearchAnimals: (keyword: string | number | undefined) =>
         dispatch(fetchAnimals(keyword as string))
 });
@@ -198,7 +198,7 @@ class HomePage extends React.Component<
                                         className={classes.iconTextField}
                                         onChange={onSearchAnimals}
                                         inputProps={{
-                                            onBlur:onHideAnimalList
+                                            onBlur: onHideAnimalList
                                         }}
                                     />
                                     {animals.length ? (
@@ -218,8 +218,9 @@ class HomePage extends React.Component<
                                                         <ListItemAvatar>
                                                             <Avatar
                                                                 src={
-                                                                    "storage/animals/64" +
-                                                                    animal.image
+                                                                    "/test/storage/animals/64/" +
+                                                                    animal.image +
+                                                                    ".jpg"
                                                                 }
                                                             />
                                                         </ListItemAvatar>
