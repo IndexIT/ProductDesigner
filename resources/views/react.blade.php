@@ -7,10 +7,6 @@
         <title>{{config('app.name')}}</title>
 
         <style type="text/css">
-            body{
-                margin:0;
-            }
-
             a:link, a:active, a:visited {
                 text-decoration: none!important;
             }

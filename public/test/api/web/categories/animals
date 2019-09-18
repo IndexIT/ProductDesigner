@@ -1,0 +1,20 @@
+{
+    "success": true,
+    "animals":[
+        {
+            "id":1,
+            "name":"Duck",
+            "image":"duck"
+        },
+        {
+            "id":2,
+            "name":"Elephant",
+            "image":"elephant"
+        },
+        {
+            "id":3,
+            "name":"Lion",
+            "image":"lion"
+        }
+    ]
+}

@@ -5,14 +5,108 @@
             "id":1,
             "title":"Shorts",
             "subCategories":[
-
+                {
+                    "id":1,
+                    "title":"I will cut you unicorn",
+                    "vendorName":null,
+                    "image":"product1"
+                },
+                {
+                    "id":2,
+                    "title":"Test Product 2",
+                    "vendorName":"Johnson",
+                    "image":"product2"
+                },
+                {
+                    "id":5,
+                    "title":"Test Product 7",
+                    "vendorName":"Linus Torvalds",
+                    "image":"product3"
+                },
+                {
+                    "id":7,
+                    "title":"Test Product 12",
+                    "vendorName":null,
+                    "image":"product4"
+                },
+                {
+                    "id":1,
+                    "title":"I will cut you unicorn",
+                    "vendorName":null,
+                    "image":"product5"
+                },
+                {
+                    "id":2,
+                    "title":"Test Product 2",
+                    "vendorName":"Johnson",
+                    "image":"product6"
+                },
+                {
+                    "id":5,
+                    "title":"Test Product 7",
+                    "vendorName":"Linus Torvalds",
+                    "image":"product7"
+                },
+                {
+                    "id":7,
+                    "title":"Test Product 12",
+                    "vendorName":null,
+                    "image":"product8"
+                }
             ]
         },
         {
             "id":2,
             "title":"Denim",
             "subCategories":[
-                
+                {
+                    "id":1,
+                    "title":"Denim 1",
+                    "vendorName":null,
+                    "image":"product5"
+                },
+                {
+                    "id":2,
+                    "title":"Denim 2",
+                    "vendorName":"Johnson",
+                    "image":"product6"
+                },
+                {
+                    "id":5,
+                    "title":"Denim 4",
+                    "vendorName":"Linus Torvalds",
+                    "image":"product7"
+                },
+                {
+                    "id":7,
+                    "title":"Denim 5",
+                    "vendorName":null,
+                    "image":"product8"
+                },
+                {
+                    "id":1,
+                    "title":"Denim 6",
+                    "vendorName":null,
+                    "image":"product1"
+                },
+                {
+                    "id":2,
+                    "title":"Test Product 2",
+                    "vendorName":"Johnson",
+                    "image":"product2"
+                },
+                {
+                    "id":5,
+                    "title":"Test Product 7",
+                    "vendorName":"Linus Torvalds",
+                    "image":"product3"
+                },
+                {
+                    "id":7,
+                    "title":"Test Product 12",
+                    "vendorName":null,
+                    "image":"product4"
+                }
             ]
         }
     ]
