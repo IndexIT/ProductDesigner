@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { APP_URL } from "./config";
 import { IResponse } from "./mainTypes";
 import { ILoginResponse, IUserResponse } from "./store/AuthController/types";
-import { IHomeCategoriesResponse } from "./store/HomePage/types";
+import { IHomeCategoriesResponse, IAnimalResponse } from "./store/HomePage/types";
 import { ICategoriesResponse } from "./store/Layout/types";
 import { IRegisterResponse } from "./store/RegisterForm/types";
 
@@ -48,8 +48,10 @@ const layout = {
 };
 
 const homePage = {
+    animals:(keyword:string): Promise<IAnimalResponse>=>
+        request("animals/search"),
     categories: (): Promise<IHomeCategoriesResponse> =>
-        request("categories/home")
+        request("categories/home"),
 };
 
 export default {

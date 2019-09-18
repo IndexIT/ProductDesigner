@@ -1,6 +1,6 @@
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
-import InputBase from "@material-ui/core/InputBase";
+import InputBase, { InputBaseProps } from "@material-ui/core/InputBase";
 import Paper from "@material-ui/core/Paper";
 import withStyles from "@material-ui/core/styles/withStyles";
 import classNames from "classnames";
@@ -22,8 +22,8 @@ const styler = withStyles(() => ({
     root: {
         alignItems: "center",
         display: "flex",
-        padding: "2px 4px",
-        width: 400
+        maxWidth: 400,
+        padding: "2px 4px"
     }
 }));
 
@@ -43,6 +43,7 @@ interface IProps {
     className?: string;
     onSubmit?: () => void;
     onClickLeftIcon?: (e?:React.MouseEvent<HTMLButtonElement>)=>void;
+    inputProps?: InputBaseProps;
 }
 
 class IconTextField extends React.Component<IProps> {
@@ -62,7 +63,8 @@ class IconTextField extends React.Component<IProps> {
             type,
             className,
             onSubmit,
-            onClickLeftIcon
+            onClickLeftIcon,
+            inputProps
         } = this.props;
 
         return (
@@ -78,6 +80,8 @@ class IconTextField extends React.Component<IProps> {
                         value={value}
                         onChange={this.handleChange}
                         type={type}
+                        fullWidth={true}
+                        {...inputProps}
                     />
                     <Divider className={classes.divider} />
                     <IconButton
