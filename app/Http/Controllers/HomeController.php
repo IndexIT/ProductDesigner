@@ -13,8 +13,8 @@ class HomeController extends Controller
     {
         $recommended = Category::limit(4)->with('subCategories')->get();
         $staff_picks = Category::where('name', 'staff_picks')->with('subCategories')->get();
-        $featured_collections = Collection::limit(3)->get();
-        $trending_collections = Collection::limit(2)->with('products')->get();
+        $featured_collections = Collection::limit(3)->with('user')->get();
+        $trending_collections = Collection::limit(2)->with('products.user', 'user')->get();
 
         return response()->json(['recomended' => $recommended, 'staff_picks' => $staff_picks,
                                   'featured_collections' => $featured_collections,

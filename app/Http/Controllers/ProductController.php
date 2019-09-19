@@ -9,7 +9,7 @@ class ProductController extends Controller
   // GET ALL PRODUCTS
   public function allProducts()
   {
-      $products= Product::get();
+      $products= Product::with('user')->get();
       if($products->count > 0){
           return response()->json(['success' => true, 'products' => $products]);
       }
@@ -18,7 +18,7 @@ class ProductController extends Controller
   // GET A PRODUCT BY ID
   public function productById($id)
   {
-      $product = Product::where('id', $id)->first();
+      $product = Product::where('id', $id)->with('user')->first();
       if(isset($product)){
         return response()->json(['success' => true, 'product' => $product]);
       }
