@@ -1,7 +1,13 @@
+import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import red from "@material-ui/core/colors/red";
 import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import ListItemText from "@material-ui/core/ListItemText";
+import Paper from "@material-ui/core/Paper";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
@@ -15,7 +21,12 @@ import { connect } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../rootReducer";
 import { IAuthControllerState } from "../../store/AuthController/types";
-import { changeForm, fetchCategories } from "../../store/HomePage/actions";
+import {
+    changeForm,
+    fetchAnimals,
+    fetchCategories,
+    hideAnimals
+} from "../../store/HomePage/actions";
 import { HomePageForms, IHomePageState } from "../../store/HomePage/types";
 import IconTextField from "../Common/IconTextField";
 import Layout from "../Layout/Layout";
@@ -24,7 +35,20 @@ import ProductRow from "./ProductRow";
 import RegisterForm from "./RegisterForm";
 
 const styler = withStyles((theme: Theme) => ({
-    blackIcon:{
+    animalList: {
+        left: 0,
+        marginLeft: "auto",
+        marginRight: "auto",
+        maxWidth: 400,
+        position: "absolute",
+        right: 0,
+        top: theme.spacing(7),
+        width: "100%"
+    },
+    animalPicker: {
+        position: "relative"
+    },
+    blackIcon: {
         color: theme.palette.text.primary
     },
     breadcrumb: {
@@ -40,27 +64,27 @@ const styler = withStyles((theme: Theme) => ({
         background: "rgba(25,25,25,0.9)",
         minHeight: 380,
         padding: theme.spacing(2),
-        transitionDuration:".1s"
+        transitionDuration: ".1s"
     },
-    breadcrumbTitle:{
-        color:theme.palette.common.white,
-        fontWeight:900,
+    breadcrumbTitle: {
+        color: theme.palette.common.white,
+        fontWeight: 900,
         marginTop: theme.spacing(10),
-        paddingLeft: theme.spacing(2) ,
-        textShadow: "2px 2px 4px rgba(0,0,0,0.7)",
+        paddingLeft: theme.spacing(2),
+        textShadow: "2px 2px 4px rgba(0,0,0,0.7)"
     },
     grow: {
         flexGrow: 1
     },
-    iconTextField:{
-        margin:"auto",
+    iconTextField: {
+        margin: "auto",
         marginTop: theme.spacing(4)
     },
-    loginFormWrapper:{
-        color:theme.palette.common.white,
-        maxWidth:440,
+    loginFormWrapper: {
+        color: theme.palette.common.white,
+        maxWidth: 440
     },
-    redIcon:{
+    redIcon: {
         color: red[400]
     },
     thirdBreadcrumb: {
@@ -73,6 +97,8 @@ const styler = withStyles((theme: Theme) => ({
 
 interface IProps {
     classes: {
+        animalList: string;
+        animalPicker: string;
         blackIcon: string;
         breadcrumb: string;
         breadcrumbLeftGrid: string;
@@ -86,6 +112,8 @@ interface IProps {
     };
     onChangeForm: (e: React.ChangeEvent<{}>, form: HomePageForms) => void;
     onDataLoad: () => void;
+    onHideAnimalList: () => void;
+    onSearchAnimals: (keyword: string | number | undefined) => void;
 }
 
 const mapStateToProps = (state: AppState) => ({
@@ -95,7 +123,10 @@ const mapStateToProps = (state: AppState) => ({
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
     onChangeForm: (e: React.ChangeEvent<{}>, form: HomePageForms) =>
         dispatch(changeForm(form)),
-    onDataLoad: () => dispatch(fetchCategories())
+    onDataLoad: () => dispatch(fetchCategories()),
+    onHideAnimalList: () => dispatch(hideAnimals()),
+    onSearchAnimals: (keyword: string | number | undefined) =>
+        dispatch(fetchAnimals(keyword as string))
 });
 
 class HomePage extends React.Component<
@@ -128,7 +159,10 @@ class HomePage extends React.Component<
             featuredCollections,
             trendingCollections,
             staffPicks,
-            user
+            user,
+            animals,
+            onSearchAnimals,
+            onHideAnimalList
         } = this.props;
 
         return (
@@ -141,26 +175,68 @@ class HomePage extends React.Component<
                                 item={true}
                                 md={6}
                             >
-                                <Typography className={classes.breadcrumbTitle} align="left" variant="h3">
+                                <Typography
+                                    className={classes.breadcrumbTitle}
+                                    align="left"
+                                    variant="h3"
+                                >
                                     Title 1
                                 </Typography>
-                                <IconTextField
-                                    label="What is your favourite animal?"
-                                    leftIcon={
-                                        <FavouriteIcon className={classes.redIcon} />
-                                    }
-                                    rightIcon={
-                                        <SearchIcon className={classes.blackIcon} />
-                                    }
-                                    className={classes.iconTextField}
-                                />
+                                <div className={classes.animalPicker}>
+                                    <IconTextField
+                                        label="What is your favourite animal?"
+                                        leftIcon={
+                                            <FavouriteIcon
+                                                className={classes.redIcon}
+                                            />
+                                        }
+                                        rightIcon={
+                                            <SearchIcon
+                                                className={classes.blackIcon}
+                                            />
+                                        }
+                                        className={classes.iconTextField}
+                                        onChange={onSearchAnimals}
+                                        inputProps={{
+                                            onBlur: onHideAnimalList
+                                        }}
+                                    />
+                                    {animals.length ? (
+                                        <Paper className={classes.animalList}>
+                                            <List>
+                                                {animals.map((animal, key) => (
+                                                    <ListItem
+                                                        divider={true}
+                                                        button={true}
+                                                        key={key}
+                                                    >
+                                                        <ListItemText
+                                                            primary={
+                                                                animal.name
+                                                            }
+                                                        />
+                                                        <ListItemAvatar>
+                                                            <Avatar
+                                                                src={
+                                                                    "/test/storage/animals/64/" +
+                                                                    animal.image +
+                                                                    ".jpg"
+                                                                }
+                                                            />
+                                                        </ListItemAvatar>
+                                                    </ListItem>
+                                                ))}
+                                            </List>
+                                        </Paper>
+                                    ) : null}
+                                </div>
                             </Grid>
                             <Grid
                                 className={classes.breadcrumbRightGrid}
                                 item={true}
                                 md={6}
                             >
-                                <div className={classes.loginFormWrapper} >
+                                <div className={classes.loginFormWrapper}>
                                     {user ? null : (
                                         <Tabs
                                             onChange={onChangeForm}
