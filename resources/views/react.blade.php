@@ -10,6 +10,9 @@
             a:link, a:active, a:visited {
                 text-decoration: none!important;
             }
+            body {
+                margin:0;
+            }
         </style>
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />

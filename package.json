@@ -17,6 +17,7 @@
         "@types/react": "^16.9.2",
         "@types/react-redux": "^7.1.2",
         "@types/react-router-dom": "^4.3.5",
+        "@types/react-youtube": "^7.6.2",
         "@types/redux": "^3.6.0",
         "@types/redux-logger": "^3.0.7",
         "@types/redux-thunk": "^2.1.0",
@@ -47,6 +48,7 @@
         "react": "^16.9.0",
         "react-redux": "^7.1.1",
         "react-router-dom": "^5.0.1",
+        "react-youtube": "^7.9.0",
         "redux": "^4.0.4",
         "redux-logger": "^3.0.6",
         "redux-thunk": "^2.3.0"

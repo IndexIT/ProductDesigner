@@ -2,10 +2,16 @@ import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Collapse from "@material-ui/core/Collapse";
+import red from "@material-ui/core/colors/red";
+import FormControl from "@material-ui/core/FormControl";
 import Grid from "@material-ui/core/Grid";
+import InputLabel from "@material-ui/core/InputLabel";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import MenuItem from "@material-ui/core/MenuItem";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import Select from "@material-ui/core/Select";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
@@ -27,14 +33,15 @@ import {
 import { IHeaderSubCategory, ILayoutState } from "../../store/Layout/types";
 import Snacks from "./Snacks";
 
+
 const styler = withStyles((theme: Theme) => ({
     brandName: {
         marginLeft: theme.spacing(2)
     },
     categoryBlock: {
         margin: theme.spacing(2),
-        marginBottom:0,
-        marginTop:0,
+        marginBottom: 0,
+        marginTop: 0
     },
     categoryLink: {
         color: theme.palette.text.primary + "!important",
@@ -42,11 +49,26 @@ const styler = withStyles((theme: Theme) => ({
         paddingRight: theme.spacing(2),
         textDecoration: "none!important"
     },
-    categoryTab:{
-        fontSize:".6em"
+    categoryTab: {
+        fontSize: ".6em"
     },
     content: {
+        padding: theme.spacing(3),
         paddingTop: theme.spacing(7)
+    },
+    footer: {
+        background: red[600],
+        width: "100%"
+    },
+    footerButton: {
+        margin: theme.spacing(2)
+    },
+    footerRight:{
+        marginLeft: theme.spacing(4)
+    },
+    formControl:{
+        margin: theme.spacing(1),
+        minWidth: 120,
     },
     grow: {
         flexGrow: 1
@@ -66,6 +88,10 @@ interface IProps {
         brandName: string;
         categoryBlock: string;
         categoryTab: string;
+        footer: string;
+        footerButton: string;
+        footerRight: string;
+        formControl: string;
         grow: string;
         header: string;
         categoryLink: string;
@@ -159,11 +185,11 @@ class Layout extends React.Component<
                                     className={classes.categoryTab}
                                     value={-1}
                                     label={
-                                        activeCategoryMenu !== -1
-                                            ? (
-                                                <CloseIcon />
-                                            )
-                                            : undefined
+                                        activeCategoryMenu !== -1 ? (
+                                            <CloseIcon />
+                                        ) : (
+                                            undefined
+                                        )
                                     }
                                 />
                             </Tabs>
@@ -184,6 +210,88 @@ class Layout extends React.Component<
                         </div>
                     </ClickAwayListener>
                     {children}
+                </div>
+
+                <div className={classes.footer}>
+                    <Grid justify="flex-end" container={true}>
+                        <Grid md={6} item={true}>
+                            <Toolbar>
+                                <Button
+                                    size="small"
+                                    className={classes.footerButton}
+                                    color="primary"
+                                >
+                                    Help
+                                </Button>
+                                <Button
+                                    size="small"
+                                    className={classes.footerButton}
+                                    color="primary"
+                                >
+                                    About Us
+                                </Button>
+                                <Button
+                                    size="small"
+                                    className={classes.footerButton}
+                                    color="primary"
+                                >
+                                    Blog
+                                </Button>
+                                <Button
+                                    size="small"
+                                    className={classes.footerButton}
+                                    color="primary"
+                                >
+                                    Terms
+                                </Button>
+                                <Button
+                                    size="small"
+                                    className={classes.footerButton}
+                                    color="primary"
+                                >
+                                    Privacy
+                                </Button>
+                                <Button
+                                    size="small"
+                                    className={classes.footerButton}
+                                    color="primary"
+                                    variant="contained"
+                                >
+                                    Help
+                                </Button>
+                            </Toolbar>
+
+                            <Typography color="primary" variant="caption">
+                                © 2019 Printometic, Inc.
+                            </Typography>
+                        </Grid>
+                        <Grid className={classes.footerRight} item={true} md={4}>
+                            <FormControl
+                                variant="outlined"
+                                className={classes.formControl}
+                            >
+                                <InputLabel
+                                    htmlFor="outlined-lng-simple"
+                                >
+                                    Language
+                                </InputLabel>
+                                <Select
+                                    value={"en"}
+                                    input={
+                                        <OutlinedInput
+                                            name="lng"
+                                            labelWidth={100}
+                                            id="outlined-lng-simple"
+                                        />
+                                    }
+                                >
+                                    <MenuItem value={"en"}>English (US)</MenuItem>
+                                    <MenuItem value={"ar"}>Arab</MenuItem>
+                                    <MenuItem value={"tm"}>Tamil</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                    </Grid>
                 </div>
                 <Snacks />
             </div>
