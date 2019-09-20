@@ -59,7 +59,8 @@ const styler = withStyles((theme: Theme) => ({
         color: theme.palette.text.primary
     },
     breadcrumbLeftGrid: {
-        padding: theme.spacing(2)
+        minHeight: 380,
+        padding: theme.spacing(2),
     },
     breadcrumbRightGrid: {
         background: "rgba(25,25,25,0.9)",
@@ -319,7 +320,7 @@ class HomePage extends React.Component<
                                 <YouTube
                                     videoId="Bey4XXJAqS8"
                                     opts={{
-                                        width:"360"
+                                        width:"298"
                                     }}
                                 />
                             </Grid>

@@ -33,10 +33,10 @@ import {
 import { IHeaderSubCategory, ILayoutState } from "../../store/Layout/types";
 import Snacks from "./Snacks";
 
-
 const styler = withStyles((theme: Theme) => ({
     brandName: {
-        marginLeft: theme.spacing(2)
+        color: theme.palette.common.black,
+        marginLeft: theme.spacing(2),
     },
     categoryBlock: {
         margin: theme.spacing(2),
@@ -63,12 +63,12 @@ const styler = withStyles((theme: Theme) => ({
     footerButton: {
         margin: theme.spacing(2)
     },
-    footerRight:{
+    footerRight: {
         marginLeft: theme.spacing(4)
     },
-    formControl:{
+    formControl: {
         margin: theme.spacing(1),
-        minWidth: 120,
+        minWidth: 120
     },
     grow: {
         flexGrow: 1
@@ -142,13 +142,23 @@ class Layout extends React.Component<
                 >
                     <Toolbar variant="dense">
                         <img src="/images/logo.png" width="38" />
-                        <Typography className={classes.brandName} variant="h5">
-                            Printomatic
-                        </Typography>
+                        <Link to="/">
+                            <Typography
+                                className={classes.brandName}
+                                variant="h5"
+                            >
+                                Printomatic
+                            </Typography>
+                        </Link>
                         <div className={classes.grow} />
-                        <Button className={classes.headerButton} size="small">
-                            Start Designing
-                        </Button>
+                        <Link to="/designer">
+                            <Button
+                                className={classes.headerButton}
+                                size="small"
+                            >
+                                Start Designing
+                            </Button>
+                        </Link>
                         {user ? null : (
                             <Link to="/#loginForm">
                                 <Button
@@ -265,14 +275,16 @@ class Layout extends React.Component<
                                 © 2019 Printometic, Inc.
                             </Typography>
                         </Grid>
-                        <Grid className={classes.footerRight} item={true} md={4}>
+                        <Grid
+                            className={classes.footerRight}
+                            item={true}
+                            md={4}
+                        >
                             <FormControl
                                 variant="outlined"
                                 className={classes.formControl}
                             >
-                                <InputLabel
-                                    htmlFor="outlined-lng-simple"
-                                >
+                                <InputLabel htmlFor="outlined-lng-simple">
                                     Language
                                 </InputLabel>
                                 <Select
@@ -285,7 +297,9 @@ class Layout extends React.Component<
                                         />
                                     }
                                 >
-                                    <MenuItem value={"en"}>English (US)</MenuItem>
+                                    <MenuItem value={"en"}>
+                                        English (US)
+                                    </MenuItem>
                                     <MenuItem value={"ar"}>Arab</MenuItem>
                                     <MenuItem value={"tm"}>Tamil</MenuItem>
                                 </Select>

@@ -6,6 +6,7 @@ import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../rootReducer";
 import { fetchUser } from "../store/AuthController/actions";
 import { IAuthControllerState } from "../store/AuthController/types";
+import DesignerPage from "./DesignerPage/DesignerPage";
 import HomePage from "./HomePage/HomePage";
 
 const mapStateToProps = (state: AppState) => ({
@@ -39,6 +40,7 @@ class Router extends React.Component<IProps> {
         return (
             <ReactRouter history={history} >
                 <Route path="/" exact={true} component={HomePage}  /> 
+                <Route path="/designer" exact={true} component={DesignerPage} />
             </ReactRouter>
         );
     }
