@@ -288,8 +288,8 @@ class HomePage extends React.Component<
                         products={staffPicks}
                     />
                     <a href="/offer/new">
-                        <img className={classes.imageDesktop} src="https://d1b2zzpxewkr9z.cloudfront.net/HP/Editorial+Features/2018_January/leggings_editorial_desktop.jpg"/>
-                        <img className={classes.imageMobile} src="https://d1b2zzpxewkr9z.cloudfront.net/HP/Editorial+Features/2018_January/leggings_editorial_mobile.jpg"/>
+                        <img className={classes.imageDesktop} src="/images/home-1-desktop.jpg"/>
+                        <img className={classes.imageMobile} src="/images/home-1-mobile.jpg"/>
                     </a>
                     <ProductRow
                         type="collection"
@@ -311,8 +311,8 @@ class HomePage extends React.Component<
                         ))}
                     </div>
                     <a href="/offer/new">
-                        <img className={classes.imageDesktop} src="https://d1b2zzpxewkr9z.cloudfront.net/HP/Editorial+Features/Teespring+Direct+HP+BannerDesktop.png"/>
-                        <img className={classes.imageMobile} src="https://d1b2zzpxewkr9z.cloudfront.net/HP/Editorial+Features/Teespring+Direct+HP+Banner+Mobile+.png"/>
+                        <img className={classes.imageDesktop} src="/images/home-2-desktop.png"/>
+                        <img className={classes.imageMobile} src="/images/home-2-mobile.png"/>
                     </a>
                     <div className={classes.thirdBreadcrumb}>
                         <Grid alignItems="center" alignContent="center" container={true}>
