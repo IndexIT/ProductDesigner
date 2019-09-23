@@ -60,4 +60,23 @@ class ProductController extends Controller
 
       return response()->json(['success' => true]);
   }
+
+  // add product to collection
+  public function addToCollection(Request $request)
+  {
+      $validator = Validator::make($request->all(), [
+        'product_id' => 'required',
+        'collection_id' => 'required'
+      ]);
+
+      if($validator->fails()){
+        return response()->json(['errors' => $validator->errors()->all()]);
+      }
+
+      $product = Product::where('product_id', $request->input('product_id'))->first();
+      $product->colletion_id = $request->input('collection_id');
+      $product->save();
+
+      return response()->json(['success' => 'true', 'message' => 'Product successfully added to collection']);
+  }
 }

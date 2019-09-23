@@ -22,6 +22,8 @@ Route::group(['middleware' => ['auth:api']], function(){
   Route::post('categories/store', 'CategoryController@storeCategory');
   // PRODUCT ROUTES - with token
   Route::post('products/store', 'ProductController@storeCategory');
+  // add a product to collection params(product_id, collection_id)
+  Route::post('products/add-collection', 'ProductController@addToCollection');
 });
 
 //AUTH ROUTES
