@@ -30,9 +30,11 @@ Route::group(['middleware' => ['auth:api']], function(){
 Route::post('login', 'AuthController@login');
 Route::post('register', 'AuthController@register');
 // CATEGORY ROUTES
-Route::post('categories/home', 'HomeController@homeCategories');
-Route::get('categories/header', 'CategoryController@allCategories');
+Route::post('/web/categories/home', 'HomeController@homeCategories');
+Route::get('/web/categories/header', 'CategoryController@allCategories');
 Route::get('categories/{id}', 'CategoryController@categoryById');
 // PRODUCT ROUTES
 Route::get('products/all', 'ProductController@allCategories');
 Route::get('products/{id}', 'ProductController@categoryById');
+// EMAIL ROUTES
+Route::post('send-email', 'EmailController@sendEmail');
