@@ -18,6 +18,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import withStyles from "@material-ui/styles/withStyles";
 import * as React from "react";
 import { connect } from "react-redux";
+import YouTube from "react-youtube";
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../rootReducer";
 import { IAuthControllerState } from "../../store/AuthController/types";
@@ -58,7 +59,8 @@ const styler = withStyles((theme: Theme) => ({
         color: theme.palette.text.primary
     },
     breadcrumbLeftGrid: {
-        padding: theme.spacing(2)
+        minHeight: 380,
+        padding: theme.spacing(2),
     },
     breadcrumbRightGrid: {
         background: "rgba(25,25,25,0.9)",
@@ -80,6 +82,18 @@ const styler = withStyles((theme: Theme) => ({
         margin: "auto",
         marginTop: theme.spacing(4)
     },
+    imageDesktop:{
+        width:"100%",
+        [theme.breakpoints.down("md")]:{
+            display:"none"
+        }
+    },
+    imageMobile:{
+        width:"100%",
+        [theme.breakpoints.up("md")]:{
+            display:"none"
+        }
+    },
     loginFormWrapper: {
         color: theme.palette.common.white,
         maxWidth: 440
@@ -88,8 +102,8 @@ const styler = withStyles((theme: Theme) => ({
         color: red[400]
     },
     thirdBreadcrumb: {
-        background: "#e45b5b",
-        color: theme.palette.common.white,
+        background: "#f0f0f0",
+        color: theme.palette.grey[800],
         minHeight: 200,
         padding: theme.spacing(2)
     }
@@ -106,6 +120,8 @@ interface IProps {
         breadcrumbTitle: string;
         grow: string;
         iconTextField: string;
+        imageDesktop: string;
+        imageMobile: string;
         loginFormWrapper: string;
         thirdBreadcrumb: string;
         redIcon: string;
@@ -271,6 +287,10 @@ class HomePage extends React.Component<
                         label="Staff Picks"
                         products={staffPicks}
                     />
+                    <a href="/offer/new">
+                        <img className={classes.imageDesktop} src="/images/home-1-desktop.jpg"/>
+                        <img className={classes.imageMobile} src="/images/home-1-mobile.jpg"/>
+                    </a>
                     <ProductRow
                         type="collection"
                         label="Featured Collections"
@@ -290,10 +310,19 @@ class HomePage extends React.Component<
                             />
                         ))}
                     </div>
+                    <a href="/offer/new">
+                        <img className={classes.imageDesktop} src="/images/home-2-desktop.png"/>
+                        <img className={classes.imageMobile} src="/images/home-2-mobile.png"/>
+                    </a>
                     <div className={classes.thirdBreadcrumb}>
-                        <Grid container={true}>
+                        <Grid alignItems="center" alignContent="center" container={true}>
                             <Grid item={true} md={4}>
-                                Youtube video here
+                                <YouTube
+                                    videoId="Bey4XXJAqS8"
+                                    opts={{
+                                        width:"298"
+                                    }}
+                                />
                             </Grid>
                             <Grid item={true} md={6}>
                                 <Typography color="inherit" variant="h6">

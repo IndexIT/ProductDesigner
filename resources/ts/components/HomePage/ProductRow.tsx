@@ -18,7 +18,7 @@ interface IProps {
 
 const styler = withStyles((theme: Theme) => ({
     wrapper: {
-        paddingTop: theme.spacing(2)
+        paddingTop: theme.spacing(4)
     }
 }));
 
@@ -28,7 +28,7 @@ class ProductRow extends React.Component<IProps> {
 
         return (
             <div className={classes.wrapper}>
-                <Typography variant="h5">{label}</Typography>
+                <Typography variant="h6">{label}</Typography>
                 <Divider />
                 <Grid alignContent="center" alignItems="center" justify="center" container={true}>
                     {products.map((product, key) => (
