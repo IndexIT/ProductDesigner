@@ -49,7 +49,7 @@ const styler = withStyles((theme: Theme) => ({
         width: "100%"
     },
     closeIcon: {
-        "&:hover":{
+        "&:hover": {
             color: red[600]
         },
         background: theme.palette.common.white,
@@ -58,8 +58,9 @@ const styler = withStyles((theme: Theme) => ({
         cursor: "pointer",
         float: "right",
         height: ".6em",
-        marginRight: ".2em",
-        marginTop: ".2em",
+        position: "absolute",
+        right: ".2em",
+        top: ".2em",
         width: ".6em"
     },
     colorPicker: {
@@ -82,6 +83,11 @@ const styler = withStyles((theme: Theme) => ({
     },
     item: {
         position: "absolute"
+    },
+    itemChildren: {
+        height: "100%",
+        position: "relative",
+        width: "100%"
     },
     modal: {
         left: `55%`,
@@ -110,7 +116,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
         dispatch(changeCurrentColor(color)),
     onMove: (itemId: number, left: number, top: number) =>
         dispatch(changePosition(itemId, left, top)),
-    onRemoveItem: (itemId:number)=>dispatch(removeItem(itemId)),
+    onRemoveItem: (itemId: number) => dispatch(removeItem(itemId)),
     onResize: (itemId: number, width: number, height: number) =>
         dispatch(changeSize(itemId, width, height)),
     onRotate: (itemId: number, rotate: number) =>
@@ -128,6 +134,7 @@ interface IProps extends IDesignerState {
         closeIcon: string;
         colorPicker: string;
         item: string;
+        itemChildren: string;
         drawer: string;
         modal: string;
         wrapper: string;
@@ -135,7 +142,7 @@ interface IProps extends IDesignerState {
     onAddItem: (item: DesignerItemType) => void;
     onToggleImageModal: (open: boolean) => void;
     onMove: (itemId: number, left: number, top: number) => void;
-    onRemoveItem: (itemId:number)=> void;
+    onRemoveItem: (itemId: number) => void;
     onResize: (itemId: number, width: number, height: number) => void;
     onRotate: (itemId: number, rotate: number) => void;
     onChangeColor: (itemId: number, color: string) => void;
@@ -155,6 +162,7 @@ class DesignerPage extends React.Component<IProps, IState> {
         this.handleClickCircleButton = this.handleClickCircleButton.bind(this);
         this.handleChangeColor = this.handleChangeColor.bind(this);
         this.handleClickRemoveIcon = this.handleClickRemoveIcon.bind(this);
+        this.handleClickLineButton = this.handleClickLineButton.bind(this);
     }
 
     public render() {
@@ -227,8 +235,11 @@ class DesignerPage extends React.Component<IProps, IState> {
                             </IconButton>
                         </Tooltip>
                         <Divider />
-                        <Tooltip onClick={this.handleClickLineButton} title="Draw a line">
-                            <IconButton size="small">
+                        <Tooltip title="Draw a line">
+                            <IconButton
+                                onClick={this.handleClickLineButton}
+                                size="small"
+                            >
                                 <ShowChartIcon />
                             </IconButton>
                         </Tooltip>
@@ -284,7 +295,7 @@ class DesignerPage extends React.Component<IProps, IState> {
 
     public renderItem(item: DesignerItemType, key: number) {
         const { classes } = this.props;
-        const {selectedItem} = this.state;
+        const { selectedItem } = this.state;
 
         const styles: React.CSSProperties = {};
 
@@ -311,6 +322,9 @@ class DesignerPage extends React.Component<IProps, IState> {
                     "solid " + Math.round(4 * scale) + "px " + item.color;
                 styles.borderRadius = "100%";
                 break;
+            case "line":
+                styles.background = "transparent";
+                break;
             default:
                 break;
         }
@@ -331,9 +345,28 @@ class DesignerPage extends React.Component<IProps, IState> {
                     ...styles
                 }}
             >
-                {selectedItem&&selectedItem.itemId===item.itemId?
-                    <CloseIcon onClick={this.handleClickRemoveIcon} className={classes.closeIcon} />
-                :null}
+                <div className={classes.itemChildren}>
+                    {item.type === "line" ? (
+                        <div style={{
+                            height:item.height-26,
+                            paddingBottom: 13,
+                            paddingTop: 13,
+                            width:"100%"
+                        }}>
+                            <div style={{
+                                background: item.color,
+                                height:"100%",
+                                width:"100%"
+                            }} />
+                        </div>
+                    ) : null}
+                    {selectedItem && selectedItem.itemId === item.itemId ? (
+                        <CloseIcon
+                            onClick={this.handleClickRemoveIcon}
+                            className={classes.closeIcon}
+                        />
+                    ) : null}
+                </div>
             </div>
         );
     }
@@ -415,35 +448,35 @@ class DesignerPage extends React.Component<IProps, IState> {
         e.currentTarget.parentElement!.click();
     }
 
-    private handleClickRemoveIcon(){
-        const {selectedItem} = this.state;
-        const {onRemoveItem} = this.props;
+    private handleClickRemoveIcon() {
+        const { selectedItem } = this.state;
+        const { onRemoveItem } = this.props;
 
-        if(selectedItem){
+        if (selectedItem) {
             onRemoveItem(selectedItem.itemId);
 
             this.setState({
-                selectedItem:undefined,
+                selectedItem: undefined,
                 target: undefined
             });
         }
     }
 
-    private handleClickLineButton(){
-        // this.props.onAddItem({
-        //     color: this.props.color,
-        //     flipHorizontal: false,
-        //     flipVertical: false,
-        //     height: 4,
-        //     itemId: 0,
-        //     left: 100,
-        //     originalHeight: 100,
-        //     originalWidth: 100,
-        //     rotate: 0,
-        //     top: 100,
-        //     type: "line",
-        //     width: 100
-        // });
+    private handleClickLineButton() {
+        this.props.onAddItem({
+            color: this.props.color,
+            flipHorizontal: false,
+            flipVertical: false,
+            height: 30,
+            itemId: 0,
+            left: 100,
+            originalHeight: 30,
+            originalWidth: 100,
+            rotate: 0,
+            top: 100,
+            type: "line",
+            width: 100
+        });
     }
 
     private handleClickSquareButton() {
