@@ -6,7 +6,6 @@ import {
     DESIGNER_PAGE_CHANGE_SIZE,
     DESIGNER_PAGE_REMOVE_ITEM,
     DESIGNER_PAGE_ROTATE,
-    DESIGNER_PAGE_TOGGLE_IMAGE_MODEL,
     DESIGNER_PAGE_TOGGLE_TEXT_MODEL,
     DesignerItemType,
     IAddItem,
@@ -16,14 +15,8 @@ import {
     IChangeSize,
     IRemoveItem,
     IRotate,
-    IToggleFontModel,
-    IToggleImageModel
+    IToggleFontModel
 } from "./types";
-
-export const toggleImageModel = (open: boolean): IToggleImageModel => ({
-    open,
-    type: DESIGNER_PAGE_TOGGLE_IMAGE_MODEL
-});
 
 export const toggleFontModel = (open: boolean): IToggleFontModel => ({
     open,

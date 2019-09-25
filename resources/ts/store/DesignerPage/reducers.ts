@@ -6,7 +6,6 @@ import {
     DESIGNER_PAGE_CHANGE_SIZE,
     DESIGNER_PAGE_REMOVE_ITEM,
     DESIGNER_PAGE_ROTATE,
-    DESIGNER_PAGE_TOGGLE_IMAGE_MODEL,
     DESIGNER_PAGE_TOGGLE_TEXT_MODEL,
     DesignerPageActions,
     IDesignerState
@@ -14,9 +13,9 @@ import {
 
 const initialState: IDesignerState = {
     color: "#ff0000",
-    imageModelOpen: false,
     items: {},
-    textModelOpen: false
+    lastItemId: -1,
+    textModelOpen: false,
 };
 
 export default (
@@ -24,11 +23,6 @@ export default (
     action: DesignerPageActions
 ): IDesignerState => {
     switch (action.type) {
-        case DESIGNER_PAGE_TOGGLE_IMAGE_MODEL:
-            return {
-                ...state,
-                imageModelOpen: action.open
-            };
         case DESIGNER_PAGE_TOGGLE_TEXT_MODEL:
             return {
                 ...state,
@@ -67,8 +61,12 @@ export default (
                 ...state,
                 items: {
                     ...state.items,
-                    [action.item.itemId]: action.item
-                }
+                    [state.lastItemId+1]: {
+                        ...action.item,
+                        itemId: state.lastItemId+1
+                    }
+                },
+                lastItemId: state.lastItemId+1
             };
         case DESIGNER_PAGE_ROTATE:
             return {
@@ -96,6 +94,7 @@ export default (
                 items: {
                     ...state.items,
                     [action.itemId]:{
+                        ...state.items[action.itemId],
                         left: action.left,
                         top: action.top
                     }

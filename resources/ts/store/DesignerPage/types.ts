@@ -1,5 +1,3 @@
-export const DESIGNER_PAGE_TOGGLE_IMAGE_MODEL =
-    "DESIGNER_PAGE_TOGGLE_IMAGE_MODEL";
 export const DESIGNER_PAGE_TOGGLE_TEXT_MODEL =
     "DESIGNER_PAGE_TOGGLE_TEXT_MODEL";
 export const DESIGNER_PAGE_CHANGE_CURRENT_COLOR =
@@ -23,6 +21,7 @@ export interface IDesignItem {
     color: string;
     left: number;
     top: number;
+    type: "image" | "text" | "circle" | "square" | "line";
 }
 
 export interface IDesignImage extends IDesignItem {
@@ -43,8 +42,8 @@ export interface IDesignerState {
     items: {
         [x: string]: DesignerItemType;
     };
-    imageModelOpen: boolean;
     textModelOpen: boolean;
+    lastItemId: number;
 }
 
 export interface IChangeSize {
@@ -81,11 +80,6 @@ export interface IChangeCurrentColor {
     color: string;
 }
 
-export interface IToggleImageModel {
-    type: typeof DESIGNER_PAGE_TOGGLE_IMAGE_MODEL;
-    open: boolean;
-}
-
 export interface IToggleFontModel {
     type: typeof DESIGNER_PAGE_TOGGLE_TEXT_MODEL;
     open: boolean;
@@ -105,6 +99,5 @@ export type DesignerPageActions =
     | IAddItem
     | IRemoveItem
     | IChangeCurrentColor
-    | IToggleImageModel
     | IToggleFontModel
     | IChangePosition;
