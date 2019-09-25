@@ -27,8 +27,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 });
 
 //AUTH ROUTES
-Route::post('login', 'AuthController@login');
-Route::post('register', 'AuthController@register');
+Auth::routes(['verify' => true]);
 // CATEGORY ROUTES
 Route::post('/web/categories/home', 'HomeController@homeCategories');
 Route::get('/web/categories/header', 'CategoryController@allCategories');
